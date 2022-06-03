@@ -49,11 +49,15 @@ body {
     url(./img/background.jpg);
   background-repeat: no-repeat;
   background-size: cover;
+  padding-top: 4rem;
 }
 
 #root {
-  width: 100%;
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
   height: 100%;
+  position: relative;
 }
 
 /*
@@ -359,7 +363,6 @@ iframe,
 embed,
 object {
   display: block; /* 1 */
-  vertical-align: middle; /* 2 */
 }
 
 /*

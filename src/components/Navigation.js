@@ -4,21 +4,25 @@ import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   display: flex;
-  position: relative;
-  padding-left: 1rem;
-  padding-right: 1rem;
   justify-content: space-between;
   align-items: center;
   max-width: 80rem;
+  height: inherit;
+  position: relative;
+  padding-left: 1rem;
+  padding-right: 1rem;
   margin-left: auto;
   margin-right: auto;
-  height: inherit;
   z-index: 10;
 `;
 
 const Nav = styled.nav`
-  background-color : #171717;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 4rem;
+  background-color : #171717;
 `;
 
 const SignInButton = styled.button`

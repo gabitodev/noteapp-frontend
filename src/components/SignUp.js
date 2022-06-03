@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import usersService from '../services/users';
 
 const Container = styled.div`
-  min-height: calc(100% - 8rem);
+  min-height: calc(100% - 4rem);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 80rem;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
@@ -77,27 +79,47 @@ const SubmitButton = styled.button`
   }
 `;
 
-const SignUp = () => {
+const SignUp = ({setNotification}) => {
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const login = (event) => {
+  const registerUser = async event => {
     event.preventDefault();
-    const signUpForm = {
-      username,
-      name,
-      password
+    try {
+      const userObject = {
+        username,
+        name,
+        password
+      };
+      await usersService.register(userObject);
+      setNotification({
+        message: `User ${username} registered`,
+        isPositive: true,
+      })
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
+      setUsername('');
+      setPassword('');
+      setName('');
+      navigate('/signin');
+    } catch (error) {
+      console.log(error.response)
+      setNotification({
+        message: error.response.data.error,
+        isPositive: false,
+      })
+      // setTimeout(() => {
+      //   setNotification(null);
+      // }, 5000);
     };
-    setUsername('');
-    setPassword('');
-    setName('');
-    console.log(signUpForm);
-  }
+  };
 
   return (
     <Container>
-      <Form onSubmit={login}>
+      <Form onSubmit={registerUser}>
         <InputDiv>
           <InputLabel htmlFor='username'>Username:</InputLabel>
           <Input
