@@ -96,7 +96,7 @@ const SignUp = ({setNotification}) => {
       await usersService.register(userObject);
       setNotification({
         message: `User ${username} registered`,
-        isPositive: true,
+        isError: false,
       })
       setTimeout(() => {
         setNotification(null);
@@ -106,14 +106,13 @@ const SignUp = ({setNotification}) => {
       setName('');
       navigate('/signin');
     } catch (error) {
-      console.log(error.response)
       setNotification({
         message: error.response.data.error,
-        isPositive: false,
+        isError: true,
       })
-      // setTimeout(() => {
-      //   setNotification(null);
-      // }, 5000);
+      setTimeout(() => {
+        setNotification(null);
+      }, 5000);
     };
   };
 

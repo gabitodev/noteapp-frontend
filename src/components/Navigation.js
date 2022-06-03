@@ -23,6 +23,7 @@ const Nav = styled.nav`
   width: 100%;
   height: 4rem;
   background-color : #171717;
+  z-index: 2;
 `;
 
 const SignInButton = styled.button`
