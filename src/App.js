@@ -5,7 +5,6 @@ import Home from './components/Home';
 import Footer from './components/Footer';
 import SignIn from './components/SignIn';
 import SignUp from './components/SignUp';
-import { useState } from 'react';
 import styled from 'styled-components';
 
 
@@ -51,15 +50,14 @@ const Notification = ({ notification }) => {
 
 
 function App() {
-  const [notification, setNotification] = useState(null);
   return (
     <>
       <Navigation />
-      <Notification notification={notification} />
+      <Notification />
       <Routes>
         <Route path='/' element={<Home />}/>
         <Route path='/signin' element={<SignIn />}/>
-        <Route path='/signup' element={<SignUp setNotification={setNotification}/>}/>
+        <Route path='/signup' element={<SignUp />}/>
       </Routes>
       <Footer />
     </>

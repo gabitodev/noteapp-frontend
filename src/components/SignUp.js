@@ -79,7 +79,7 @@ const SubmitButton = styled.button`
   }
 `;
 
-const SignUp = ({setNotification}) => {
+const SignUp = () => {
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -94,25 +94,12 @@ const SignUp = ({setNotification}) => {
         password
       };
       await usersService.register(userObject);
-      setNotification({
-        message: `User ${username} registered`,
-        isError: false,
-      })
-      setTimeout(() => {
-        setNotification(null);
-      }, 5000);
       setUsername('');
       setPassword('');
       setName('');
       navigate('/signin');
     } catch (error) {
-      setNotification({
-        message: error.response.data.error,
-        isError: true,
-      })
-      setTimeout(() => {
-        setNotification(null);
-      }, 5000);
+      console.log(error.response.data.error);
     };
   };
 
