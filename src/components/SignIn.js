@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -77,24 +76,10 @@ const SubmitButton = styled.button`
   }
 `;
 
-const SignIn = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-
-  const login = (event) => {
-    event.preventDefault();
-    const loginForm = {
-      username,
-      password
-    };
-    setUsername('');
-    setPassword('');
-    console.log(loginForm);
-  }
-
+const SignIn = ({ username, password, handleUsernameChange, handlePasswordChange, handleSubmit }) => {
   return (
     <Container>
-      <Form onSubmit={login}>
+      <Form onSubmit={handleSubmit}>
         <InputDiv>
           <InputLabel htmlFor='username'>Username:</InputLabel>
           <Input
@@ -103,7 +88,7 @@ const SignIn = () => {
             name='username'
             minLength='6'
             required={true}
-            onChange={({ target }) => setUsername(target.value)}
+            onChange={handleUsernameChange}
             value={username}/>
         </InputDiv>
         <InputDiv>
@@ -113,7 +98,7 @@ const SignIn = () => {
             placeholder='password' 
             name='password'
             required={true}
-            onChange={({ target }) => setPassword(target.value)}
+            onChange={handlePasswordChange}
             value={password}/>
         </InputDiv>
         <SubmitButton type="submit">Submit</SubmitButton>

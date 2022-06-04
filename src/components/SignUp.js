@@ -1,7 +1,4 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import usersService from '../services/users';
 
 const Container = styled.div`
   min-height: calc(100% - 4rem);
@@ -79,33 +76,10 @@ const SubmitButton = styled.button`
   }
 `;
 
-const SignUp = () => {
-  const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const navigate = useNavigate();
-
-  const registerUser = async event => {
-    event.preventDefault();
-    try {
-      const userObject = {
-        username,
-        name,
-        password
-      };
-      await usersService.register(userObject);
-      setUsername('');
-      setPassword('');
-      setName('');
-      navigate('/signin');
-    } catch (error) {
-      console.log(error.response.data.error);
-    };
-  };
-
+const SignUp = ({ username, password, name, handleUsernameChange, handlePasswordChange, handleNameChange, handleSubmit }) => {
   return (
     <Container>
-      <Form onSubmit={registerUser}>
+      <Form onSubmit={handleSubmit}>
         <InputDiv>
           <InputLabel htmlFor='username'>Username:</InputLabel>
           <Input
@@ -114,7 +88,7 @@ const SignUp = () => {
             name='username'
             minLength='6'
             required={true}
-            onChange={({ target }) => setUsername(target.value)}
+            onChange={handleUsernameChange}
             value={username}/>
         </InputDiv>
         <InputDiv>
@@ -124,7 +98,7 @@ const SignUp = () => {
             placeholder='name' 
             name='name'
             required={true}
-            onChange={({ target }) => setName(target.value)}
+            onChange={handleNameChange}
             value={name}/>
         </InputDiv>
         <InputDiv>
@@ -134,7 +108,7 @@ const SignUp = () => {
             placeholder='password' 
             name='password'
             required={true}
-            onChange={({ target }) => setPassword(target.value)}
+            onChange={handlePasswordChange}
             value={password}/>
         </InputDiv>
         <SubmitButton type="submit">Register</SubmitButton>
