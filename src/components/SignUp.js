@@ -22,7 +22,7 @@ const Form = styled.form`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  min-height: 28rem;
+  min-height: 30rem;
   border-radius: 0.5rem;
   padding: 1.5rem;
   background-color: #171717;
@@ -83,20 +83,31 @@ const SubmitButton = styled.button`
 const SuccessIcon = styled.span`
   display: ${props => (props.validInput && props.input) ? 'inline' : 'none'};
   padding-left: 0.5rem;
+  color: rgb(110 231 183);
 `;
 
 const FailureIcon = styled.span`
   display: ${props => (props.validInput || !props.input) ? 'none' : 'inline'};
   padding-left: 0.5rem;
+  color: rgb(248 113 113);
 `;
 
 const InputInfo = styled.p`
   display: ${props => (props.inputFocus && props.input && !props.validInput) ? 'block' : 'none'};
   font-size: 0.75rem;
+  @media (min-width: 1024px) {
+    font-size: 1rem;
+  }
+`;
+
+const FormTitle = styled.h3`
+  color: #818cf8;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
 `;
 
 const USERNAME_REGEX = /^[a-zA-Z][a-za-z0-9-_]{6,16}$/;
-const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{6,16}$/;
+const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[0-9])(?=.*[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]).{6,24}$/;
 
 const SignUp = () => {
   const userRef = useRef();
@@ -129,10 +140,22 @@ const SignUp = () => {
     setValidMatch(match);
   }, [password, matchPassword]);
 
+  const handleSignUp = (event) => {
+    event.preventDefault();
+    const newUser = {
+      username,
+      password
+    };
+    setUsername('');
+    setPassword('');
+    setMatchPassword('');
+    console.log('New user created:', newUser);
+  };
+
   return (
     <Container>
-      <Form>
-        <h1>Register</h1>
+      <Form onSubmit={handleSignUp}>
+        <FormTitle>Register</FormTitle>
         <InputDiv>
           <InputLabel htmlFor='username'>
             Username:
@@ -178,9 +201,8 @@ const SignUp = () => {
             onBlur={() => setPasswordFocus(false)}
             value={password}/>
           <InputInfo inputFocus={passwordFocus} input={true} validInput={validPassword}>
-            <FontAwesomeIcon icon={faInfoCircle}/> 6 to 16 characters.<br />
-            Must include uppercase and lowercase letters, a number and a special character.<br />
-            Allowed special characters: !@#$%.
+            <FontAwesomeIcon icon={faInfoCircle}/> 6 to 24 characters.<br />
+            Must include a letter, a number and a special character.<br />
           </InputInfo>
         </InputDiv>
         <InputDiv>

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
+import { useEffect, useState, useRef } from 'react';
 
-const Container = styled.div`
+const Container = styled.section`
   min-height: calc(100% - 4rem);
   display: flex;
   flex-direction: column;
@@ -19,9 +20,9 @@ const Form = styled.form`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 20rem;
+  min-height: 26rem;
   border-radius: 0.5rem;
-  padding: 2rem;
+  padding: 1.5rem;
   background-color: #171717;
   color: white;
   @media (min-width: 768px) {
@@ -66,6 +67,7 @@ const SubmitButton = styled.button`
   border: 2px solid #fbbf24;
   border-radius: 0.5rem;
   padding: 0.4rem 0.3rem;
+  opacity: ${props => props.disabled ? '0.3' : '1'};
   transition: all 0.3s ease-in-out;
   &:hover {
     background-color: #fbbf24;
@@ -76,35 +78,65 @@ const SubmitButton = styled.button`
   }
 `;
 
-const SignIn = ({ username, password, handleUsernameChange, handlePasswordChange, handleSubmit }) => {
+const FormTitle = styled.h3`
+  color: #fbbf24;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+`;
+
+const SignIn= () => {
+  const userRef = useRef();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    userRef.current.focus();
+  }, []);
+
+  const handleSignIn = (event) => {
+    event.preventDefault();
+    const newUser = {
+      username,
+      password
+    };
+    setUsername('');
+    setPassword('');
+    console.log('loggedIn', newUser);
+  };
+
   return (
     <Container>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSignIn}>
+        <FormTitle>Sign In</FormTitle>
         <InputDiv>
-          <InputLabel htmlFor='username'>Username:</InputLabel>
+          <InputLabel htmlFor='username'>
+            Username:
+          </InputLabel>
           <Input
             type='text'
-            placeholder='username'
-            name='username'
-            minLength='6'
-            required={true}
-            onChange={handleUsernameChange}
+            id='username'
+            ref={userRef}
+            autoComplete='off'
+            required
+            onChange={({ target }) => setUsername(target.value)}
             value={username}/>
         </InputDiv>
         <InputDiv>
-          <InputLabel htmlFor='password'>Password:</InputLabel>
-          <Input 
-            type='password' 
-            placeholder='password' 
-            name='password'
-            required={true}
-            onChange={handlePasswordChange}
+          <InputLabel htmlFor='password'>
+            Password:
+          </InputLabel>
+          <Input
+            type='password'
+            id='password'
+            required
+            onChange={({ target }) => setPassword(target.value)}
             value={password}/>
         </InputDiv>
-        <SubmitButton type="submit">Submit</SubmitButton>
+        <SubmitButton disabled={!username || !password ? true : false}>Sign In</SubmitButton>
       </Form>
     </Container>
   );
 };
+
 
 export default SignIn;
