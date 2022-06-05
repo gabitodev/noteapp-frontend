@@ -1,5 +1,7 @@
 import styled from 'styled-components';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
+import AuthContext from '../context/AuthProvider';
+import loginService from '../services/login';
 
 const Container = styled.section`
   min-height: calc(100% - 4rem);
@@ -86,6 +88,7 @@ const FormTitle = styled.h3`
 
 const SignIn= () => {
   const userRef = useRef();
+  const { setAuth } = useContext(AuthContext);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -93,15 +96,12 @@ const SignIn= () => {
     userRef.current.focus();
   }, []);
 
-  const handleSignIn = (event) => {
+  const handleSignIn = async (event) => {
     event.preventDefault();
-    const newUser = {
-      username,
-      password
-    };
+    const credentials = await loginService.login({ username, password });
+    setAuth(credentials);
     setUsername('');
     setPassword('');
-    console.log('loggedIn', newUser);
   };
 
   return (

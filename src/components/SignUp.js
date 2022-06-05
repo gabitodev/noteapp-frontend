@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
+import NotificationContext from '../context/NotificationProvider';
 
 const Container = styled.section`
   min-height: calc(100% - 4rem);
@@ -111,6 +112,7 @@ const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[0-9])(?=.*[ `!@#$%^&*()_+\-=[\]{};':"\
 
 const SignUp = () => {
   const userRef = useRef();
+  const { setNotification } = useContext(NotificationContext);
 
   const [username, setUsername] = useState('');
   const [validUsername, setValidUsername] = useState(false);
@@ -146,6 +148,13 @@ const SignUp = () => {
       username,
       password
     };
+    setNotification({
+      message: `User ${username} created!`,
+      isError: false,
+    });
+    setTimeout(() => {
+      setNotification(null);
+    }, 5000);
     setUsername('');
     setPassword('');
     setMatchPassword('');
