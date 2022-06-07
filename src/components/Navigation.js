@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
+import logoutService from '../services/logout';
+import useNotification from '../hooks/useNotification';
+
 
 const Container = styled.div`
   display: flex;
@@ -101,24 +105,47 @@ const Svg = styled.svg`
 
 const Navigation = () => {
   const [navOpen, setNavOpen] = useState(false);
+  const { auth, setAuth } = useAuth();
+  const { setNotification } = useNotification();
+  const navigate = useNavigate();
 
   const handleNavOpen = () => {
     setNavOpen(!navOpen);
   }
 
+  const handleLogout = async () => {
+    await logoutService.logout();
+    handleNavOpen();
+    setAuth({});
+    navigate('/home');
+    setNotification({
+      message: 'Successfully logged out',
+      isError: false
+    });
+    setTimeout(() => setNotification(null), 5000);
+  };
+
   return (
     <Nav>
       <Container>
-        <Link to='/'><Title>NoteDEV</Title></Link>
-        <NavLinks>
-          <Link to='/signin'>
-            <SignInButton>Sign In</SignInButton>
-          </Link>
-          <Link to='/signup'>
-            <SignUpButton>Register</SignUpButton>
-          </Link>
-        </NavLinks>
-        {navOpen 
+        {auth.username
+          ? <Link to='/'><Title>NoteDEV</Title></Link>
+          : <Link to='/home'><Title>NoteDEV</Title></Link>
+        }
+          {auth.username
+            ? <NavLinks>
+                  <SignInButton onClick={handleLogout}>Logout</SignInButton>
+              </NavLinks>
+            : <NavLinks>
+                <Link to='/signin'>
+                  <SignInButton>Sign In</SignInButton>
+                </Link>
+                <Link to='/signup'>
+                  <SignUpButton>Register</SignUpButton>
+                </Link>
+              </NavLinks>
+          }
+        {navOpen
           ? <HamburgerIcon onClick={handleNavOpen}>
               <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path strokeLinecap='round' strokeLinejoin='round' d="M6 18L18 6M6 6l12 12" />
@@ -131,10 +158,15 @@ const Navigation = () => {
             </HamburgerIcon>
         }
       </Container>
-      <DropDownMenu navOpen={navOpen}>
-          <Link to='/signin' onClick={handleNavOpen}>Sign In</Link>
-          <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
-      </DropDownMenu>
+      {auth.username
+        ? <DropDownMenu navOpen={navOpen}>
+            <Link to='/' onClick={handleLogout}>Logout</Link>
+          </DropDownMenu>
+        : <DropDownMenu navOpen={navOpen}>
+            <Link to='/signin' onClick={handleNavOpen}>Sign In</Link>
+            <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
+          </DropDownMenu>
+      }
     </Nav>
   );
 };

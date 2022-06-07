@@ -1,7 +1,9 @@
 import styled from 'styled-components';
-import { useEffect, useState, useRef, useContext } from 'react';
-import AuthContext from '../context/AuthProvider';
+import { useEffect, useState, useRef } from 'react';
+import useAuth from '../hooks/useAuth';
+import useNotification from '../hooks/useNotification';
 import loginService from '../services/login';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.section`
   min-height: calc(100% - 4rem);
@@ -88,7 +90,9 @@ const FormTitle = styled.h3`
 
 const SignIn= () => {
   const userRef = useRef();
-  const { setAuth } = useContext(AuthContext);
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const { setNotification } = useNotification();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
@@ -100,8 +104,16 @@ const SignIn= () => {
     event.preventDefault();
     const credentials = await loginService.login({ username, password });
     setAuth(credentials);
+    setNotification({
+      message: `${username} logged in!`,
+      isError: false,
+    })
+    setTimeout(() => {
+      setNotification(null)
+    }, 5000);
     setUsername('');
     setPassword('');
+    navigate('/');
   };
 
   return (

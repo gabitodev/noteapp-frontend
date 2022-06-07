@@ -1,8 +1,10 @@
 import styled from 'styled-components';
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle, faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
-import NotificationContext from '../context/NotificationProvider';
+import useNotification from '../hooks/useNotification';
+import usersService from '../services/users';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.section`
   min-height: calc(100% - 4rem);
@@ -108,15 +110,21 @@ const FormTitle = styled.h3`
 `;
 
 const USERNAME_REGEX = /^[a-zA-Z][a-za-z0-9-_]{6,16}$/;
+const NAME_REGEX = /^[a-zA-Z][ a-zA-Z]{6,16}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[0-9])(?=.*[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]).{6,24}$/;
 
 const SignUp = () => {
   const userRef = useRef();
-  const { setNotification } = useContext(NotificationContext);
+  const navigate = useNavigate();
+  const { setNotification } = useNotification();
 
   const [username, setUsername] = useState('');
   const [validUsername, setValidUsername] = useState(false);
   const [usernameFocus, setUsernameFocus] = useState(false);
+
+  const [name, setName] = useState('');
+  const [validName, setValidName] = useState(false);
+  const [nameFocus, setNameFocus] = useState(false);
 
   const [password, setPassword] = useState('');
   const [validPassword, setValidPassword] = useState(false);
@@ -136,29 +144,43 @@ const SignUp = () => {
   }, [username]);
 
   useEffect(() => {
+    const nameValidation = NAME_REGEX.test(name);
+    setValidName(nameValidation);
+  }, [name]);
+
+  useEffect(() => {
     const passwordValidation = PASSWORD_REGEX.test(password);
     setValidPassword(passwordValidation);
     const match = password === matchPassword;
     setValidMatch(match);
   }, [password, matchPassword]);
 
-  const handleSignUp = (event) => {
+  const handleSignUp = async (event) => {
     event.preventDefault();
     const newUser = {
       username,
+      name,
       password
     };
-    setNotification({
-      message: `User ${username} created!`,
-      isError: false,
-    });
-    setTimeout(() => {
-      setNotification(null);
-    }, 5000);
-    setUsername('');
-    setPassword('');
-    setMatchPassword('');
-    console.log('New user created:', newUser);
+    try {
+      await usersService.register(newUser);
+      setNotification({
+        message: `User ${username} created!`,
+        isError: false,
+      });
+      setTimeout(() => setNotification(null), 5000);
+      setUsername('');
+      setName('');
+      setPassword('');
+      setMatchPassword('');
+      navigate('/signin');
+    } catch (error) {
+      setNotification({
+        message: error.response.data.error,
+        isError: true,
+      });
+      setTimeout(() => setNotification(null), 5000);
+    }
   };
 
   return (
@@ -189,6 +211,30 @@ const SignUp = () => {
             <FontAwesomeIcon icon={faInfoCircle}/> 6 to 16 characters.<br />
             Must begin with a letter.<br />
             Letters, numbers, underscore, hyphens allowed.
+          </InputInfo>
+        </InputDiv>
+        <InputDiv>
+          <InputLabel htmlFor='name'>
+            Name:
+            <SuccessIcon validInput={validName} input={name}>
+              <FontAwesomeIcon icon={faCheck}/>
+            </SuccessIcon>
+            <FailureIcon validInput={validName} input={name}>
+              <FontAwesomeIcon icon={faTimes}/>
+            </FailureIcon>
+          </InputLabel>
+          <Input
+            type='text'
+            id='name'
+            autoComplete='off'
+            required
+            onChange={({ target }) => setName(target.value)}
+            onFocus={() => setNameFocus(true)}
+            onBlur={() => setNameFocus(false)}
+            value={name}/>
+          <InputInfo inputFocus={nameFocus} input={name} validInput={validName}>
+            <FontAwesomeIcon icon={faInfoCircle}/> 6 to 16 characters.<br />
+            First and last name.
           </InputInfo>
         </InputDiv>
         <InputDiv>

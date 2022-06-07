@@ -1,6 +1,5 @@
-import { useContext } from 'react';
 import styled from 'styled-components';
-import NotificationContext from '../context/NotificationProvider';
+import useNotification from '../hooks/useNotification';
 
 const NotificationDiv = styled.div`
   position: absolute;
@@ -33,7 +32,7 @@ const Text = styled.div`
 `;
 
 const Notification = () => {
-  const { notification } = useContext(NotificationContext);
+  const { notification } = useNotification();
   if (!notification) return null;
 
   return (

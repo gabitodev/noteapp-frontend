@@ -1,9 +1,7 @@
-import axios from 'axios';
-const baseUrl = '/api/notes';
+import axiosPrivate from './private';
 
 const getNotesOfUser = async () => {
-  const { data } = await axios.get(baseUrl, {withCredentials: true});
-  console.log(data);
+  const { data } = await axiosPrivate.get();
   return data;
 };
 
