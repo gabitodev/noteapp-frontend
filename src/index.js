@@ -4,13 +4,16 @@ import App from './App';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/AuthProvider';
 import { NotificationProvider } from './context/NotificationProvider';
+import { NotesProvider } from './context/NotesProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
     <AuthProvider>
       <NotificationProvider>
-        <App />
+        <NotesProvider>
+          <App />
+        </NotesProvider>
       </NotificationProvider>
     </AuthProvider>
   </Router>
