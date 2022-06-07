@@ -12,6 +12,51 @@ import { useEffect, useState } from 'react';
 import useAxiosPrivate from './hooks/useAxiosPrivate';
 import notesService from './services/notes';
 
+import styled from 'styled-components';
+
+const Container = styled.div`
+  min-height: calc(100% - 4rem);
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding-top: 1rem;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+`;
+
+const NoteContainer = styled.div`
+  background-color: #171717;
+  width: 100%;
+  min-height: 10rem;
+  color: white;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  @media (min-width: 640px) {
+    width: 25%;
+  }
+`;
+
+const NoteTitle = styled.h3`
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+`;
+
+const Note = ({ note }) => {
+  return (
+    <NoteContainer>
+      <NoteTitle>{note.title}</NoteTitle>
+      <p>{note.content}</p>
+    </NoteContainer>
+  );
+};
+
 const Notes = () => {
   const [notes, setNotes] = useState([]);
   const axiosPrivate = useAxiosPrivate();
@@ -26,9 +71,11 @@ const Notes = () => {
   }, [axiosPrivate]);
   
   return (
-    <div>
-      {notes.map(note => <p key={note.id}>{note.title}</p> )}
-    </div>
+    <Container>
+      {notes.map(note =>
+        <Note key={note.id} note={note}/>
+      )}
+    </Container>
   );
 }
 
