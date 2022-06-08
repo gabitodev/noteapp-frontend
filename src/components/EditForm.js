@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import useNotes from '../hooks/useNotes';
 import { keyframes } from 'styled-components';
 import styled from 'styled-components';
+import useNotes from '../hooks/useNotes';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
+import useNotification from '../hooks/useNotification';
 
 const width = keyframes`
   from {
@@ -77,32 +78,48 @@ const TextArea = styled.textarea`
 `;
 
 const EditForm = ({ note, setIsEditing }) => {
-  const [inputTitle, setInputTitle] = useState(note.title);
-  const [inputContent, setInputContent] = useState(note.content);
+  const [title, setTitle] = useState(note.title);
+  const [content, setContent] = useState(note.content);
   const axiosPrivate = useAxiosPrivate();
   const { notes, setNotes } = useNotes();
+  const { setNotification } = useNotification();
   
   const handleEdit = async (event, id) => {
     event.preventDefault();
     const noteToEdit = {
-      title: inputTitle,
-      content: inputContent,
+      title,
+      content,
     };
-    const {data: editedNote} = await axiosPrivate.put(id, noteToEdit);
-    setNotes(notes.map(note => note.id !== id ? note : editedNote));
-    setIsEditing(false);
-  }
+
+    try {
+      const {data: editedNote} = await axiosPrivate.put(id, noteToEdit);
+      setNotes(notes.map(note => note.id !== id ? note : editedNote));
+      setIsEditing(false);
+      setNotification({
+        message: `Note edited successfully 👍`,
+        iseError: false,
+      });
+      setTimeout(() => setNotification(null), 5000);
+    } catch (error) {
+      setNotification({
+        message: error.response.data.error,
+        iseError: true,
+      });
+      setTimeout(() => setNotification(null), 5000);
+    };
+  };
 
   const handleCancel = () => {
-    setInputTitle(note.title);
-    setInputContent(note.content);
+    setTitle(note.title);
+    setContent(note.content);
     setIsEditing(false);
   };
+  
   return (
     <EditDiv>
       <Form onSubmit={(event) => handleEdit(event, note.id)}>
-        <Input type="text" value={inputTitle} onChange={({ target }) => setInputTitle(target.value)} />
-        <TextArea name="content" id="" cols="30" rows="5" value={inputContent} onChange={({ target }) => setInputContent(target.value)}></TextArea>
+        <Input type="text" value={title} onChange={({ target }) => setTitle(target.value)} />
+        <TextArea name="content" id="" cols="30" rows="5" value={content} onChange={({ target }) => setContent(target.value)}></TextArea>
         <button type='submit'>Save</button>
         <button onClick={handleCancel}>Cancel</button>
       </Form>
