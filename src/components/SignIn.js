@@ -90,7 +90,7 @@ const FormTitle = styled.h3`
 
 const SignIn= () => {
   const userRef = useRef();
-  const { setAuth } = useAuth();
+  const { setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
   const { setNotification } = useNotification();
   const [username, setUsername] = useState('');
@@ -113,9 +113,17 @@ const SignIn= () => {
     }, 5000);
     setUsername('');
     setPassword('');
-    navigate('/');
+    navigate('/notes');
   };
 
+  const togglePersist = () => {
+    setPersist(!persist);
+  };
+
+  useEffect(() => {
+    localStorage.setItem('persist', persist);
+  }, [persist]);
+  
   return (
     <Container>
       <Form onSubmit={handleSignIn}>
@@ -145,6 +153,10 @@ const SignIn= () => {
             value={password}/>
         </InputDiv>
         <SubmitButton disabled={!username || !password ? true : false}>Sign In</SubmitButton>
+        <div>
+          <label htmlFor="persist">Trust this device</label>
+          <input type="checkbox" name="persist" id="persist" onChange={togglePersist} checked={persist} />
+        </div>
       </Form>
     </Container>
   );

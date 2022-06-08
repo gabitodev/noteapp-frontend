@@ -8,14 +8,16 @@ import { NotesProvider } from './context/NotesProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Router>
-    <AuthProvider>
-      <NotificationProvider>
-        <NotesProvider>
-          <App />
-        </NotesProvider>
-      </NotificationProvider>
-    </AuthProvider>
-  </Router>
+  <React.StrictMode>
+    <Router>
+      <AuthProvider>
+        <NotificationProvider>
+          <NotesProvider>
+            <App />
+          </NotesProvider>
+        </NotificationProvider>
+      </AuthProvider>
+    </Router>
+  </React.StrictMode>
 );
 

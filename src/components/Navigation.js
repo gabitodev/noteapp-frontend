@@ -5,7 +5,6 @@ import useAuth from '../hooks/useAuth';
 import logoutService from '../services/logout';
 import useNotification from '../hooks/useNotification';
 
-
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -114,15 +113,23 @@ const Navigation = () => {
   }
 
   const handleLogout = async () => {
-    await logoutService.logout();
-    handleNavOpen();
-    setAuth({});
-    navigate('/home');
-    setNotification({
-      message: 'Successfully logged out',
-      isError: false
-    });
-    setTimeout(() => setNotification(null), 5000);
+    try {
+      await logoutService.logout();
+      handleNavOpen();
+      setAuth({});
+      navigate('/home');
+      setNotification({
+        message: 'Successfully logged out 👍',
+        isError: false
+      });
+      setTimeout(() => setNotification(null), 5000);
+    } catch (error) {
+      setNotification({
+        message: error.response.data,
+        isError: true,
+      });
+      setTimeout(() => setNotification(null), 5000);
+    }
   };
 
   return (
@@ -160,7 +167,7 @@ const Navigation = () => {
       </Container>
       {auth.username
         ? <DropDownMenu navOpen={navOpen}>
-            <Link to='/' onClick={handleLogout}>Logout</Link>
+            <Link to='/home' onClick={handleLogout}>Logout</Link>
           </DropDownMenu>
         : <DropDownMenu navOpen={navOpen}>
             <Link to='/signin' onClick={handleNavOpen}>Sign In</Link>
