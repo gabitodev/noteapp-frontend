@@ -9,6 +9,8 @@ import Notification from './components/Notification';
 import RequireAuth from './components/RequireAuth';
 import PersistLogin from './components/PersistLogin';
 import Notes from './components/Notes';
+import EditNote from './components/EditNote';
+import CreateNote from './components/CreateNote';
 
 const App = () => {
   return (
@@ -27,7 +29,10 @@ const App = () => {
 
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth home={false} />}>
-            <Route path='/notes' element={<Notes />}/>
+            <Route path='/notes' element={<Notes />}>
+              <Route path=':id' element={<EditNote />}/>
+              <Route path='create' element={<CreateNote />}/>
+            </Route>
           </Route>
         </Route>
       </Routes>

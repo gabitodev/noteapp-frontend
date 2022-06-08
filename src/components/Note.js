@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { useState } from 'react';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import useNotes from '../hooks/useNotes';
-import EditForm from './EditForm';
+import useNotification from '../hooks/useNotification';
+import { Link } from 'react-router-dom';
 
 const NoteContainer = styled.div`
   background-color: #171717;
@@ -38,33 +38,35 @@ const ButtonDiv = styled.div`
 `;
 
 const Note = ({ note }) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [isCreating, setIsCreating] = useState(false);
   const axiosPrivate = useAxiosPrivate();
   const { notes, setNotes } = useNotes();
+  const { setNotification } = useNotification();
 
   const deleteNote = async (id) => {
-    await axiosPrivate.delete(id);
-    setNotes(notes.filter(note => note.id !== id ));
+    try {
+      await axiosPrivate.delete(id);
+      const noteToDelete = notes.find(note => note.id === id);
+      setNotes(notes.filter(note => note.id !== id ));
+      setNotification({
+        message: `Note '${noteToDelete.title}' removed successfully 👍`,
+        iseError: false,
+      });
+      setTimeout(() => setNotification(null), 5000);
+    } catch (error) {
+      console.error(error);
+    }
   }
+
   return (
-    <>{
-      isCreating
-      ? <h1>YES!</h1>
-      : <>
-          {isEditing
-            ? <EditForm note={note} setIsEditing={setIsEditing}/>
-            : <NoteContainer>
-                <NoteTitle>{note.title}</NoteTitle>
-                <p>{note.content}</p>
-                <ButtonDiv>
-                  <button onClick={() => setIsEditing(!isEditing)}>Edit</button>
-                  <button onClick={() => deleteNote(note.id)}>Delete</button>
-                </ButtonDiv>
-              </NoteContainer>    
-          }
-        </>
-      }
+    <>
+      <NoteContainer>
+        <NoteTitle>{note.title}</NoteTitle>
+        <p>{note.content}</p>
+        <ButtonDiv>
+          <Link to={`${note.id}`}>Edit</Link>
+          <button onClick={() => deleteNote(note.id)}>Delete</button>
+        </ButtonDiv>
+      </NoteContainer>
     </>
   );
 };

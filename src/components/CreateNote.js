@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import useNotes from '../hooks/useNotes';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import useNotification from '../hooks/useNotification';
+import { useNavigate } from 'react-router-dom';
 
 const width = keyframes`
   from {
@@ -27,7 +28,7 @@ const opacity = keyframes`
   }
 `;
 
-const EditDiv = styled.div`
+const CreateDiv = styled.div`
   position: fixed;
   display: flex;
   justify-content: center;
@@ -77,29 +78,33 @@ const TextArea = styled.textarea`
   background-color: #171717;
 `;
 
-const EditForm = ({ note, setIsEditing }) => {
-  const [title, setTitle] = useState(note.title);
-  const [content, setContent] = useState(note.content);
-  const axiosPrivate = useAxiosPrivate();
+const CreateNote = () => {
+  const navigate = useNavigate();
   const { notes, setNotes } = useNotes();
+
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const axiosPrivate = useAxiosPrivate();
   const { setNotification } = useNotification();
   
-  const handleEdit = async (event, id) => {
+  const handleCreate = async (event) => {
     event.preventDefault();
-    const noteToEdit = {
+    const noteToCreate= {
       title,
       content,
     };
-
     try {
-      const {data: editedNote} = await axiosPrivate.put(id, noteToEdit);
-      setNotes(notes.map(note => note.id !== id ? note : editedNote));
-      setIsEditing(false);
+      const {data: createdNote} = await axiosPrivate.post('/', noteToCreate);
+      setNotes(notes.concat(createdNote));
       setNotification({
-        message: `Note edited successfully 👍`,
+        message: `Note '${createdNote.title}' created successfully 👍`,
         iseError: false,
       });
       setTimeout(() => setNotification(null), 5000);
+      navigate('/notes');
+      setTitle('');
+      setContent('');
     } catch (error) {
       setNotification({
         message: error.response.data.error,
@@ -108,22 +113,15 @@ const EditForm = ({ note, setIsEditing }) => {
       setTimeout(() => setNotification(null), 5000);
     };
   };
-
-  const handleCancel = () => {
-    setTitle(note.title);
-    setContent(note.content);
-    setIsEditing(false);
-  };
   
   return (
-    <EditDiv>
-      <Form onSubmit={(event) => handleEdit(event, note.id)}>
-        <Input type="text" value={title} onChange={({ target }) => setTitle(target.value)} />
-        <TextArea name="content" id="" cols="30" rows="5" value={content} onChange={({ target }) => setContent(target.value)}></TextArea>
+    <CreateDiv>
+      <Form onSubmit={handleCreate}>
+        <Input type="text" value={title} placeholder='Title' onChange={({ target }) => setTitle(target.value)} />
+        <TextArea name="content" id="" cols="10" rows="2" placeholder='Take a note...' value={content} onChange={({ target }) => setContent(target.value)}></TextArea>
         <button type='submit'>Save</button>
-        <button onClick={handleCancel}>Cancel</button>
       </Form>
-    </EditDiv>
+    </CreateDiv>
   );
 }
-export default EditForm;
+export default CreateNote;

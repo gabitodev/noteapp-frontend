@@ -117,7 +117,7 @@ const Navigation = () => {
       await logoutService.logout();
       handleNavOpen();
       setAuth({});
-      navigate('/home');
+      navigate('/');
       setNotification({
         message: 'Successfully logged out 👍',
         isError: false
@@ -136,8 +136,8 @@ const Navigation = () => {
     <Nav>
       <Container>
         {auth.username
-          ? <Link to='/'><Title>NoteDEV</Title></Link>
-          : <Link to='/home'><Title>NoteDEV</Title></Link>
+          ? <Link to='/notes'><Title>NoteDEV</Title></Link>
+          : <Link to='/'><Title>NoteDEV</Title></Link>
         }
           {auth.username
             ? <NavLinks>
