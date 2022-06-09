@@ -5,13 +5,19 @@ import useNotification from '../hooks/useNotification';
 import loginService from '../services/login';
 import { useNavigate } from 'react-router-dom';
 
+const Section = styled.section`
+  min-height: calc(100vh - 8rem);
+  background-color: #18181b;
+`;
+
+
 const Container = styled.section`
-  min-height: calc(100% - 4rem);
+  min-height: calc(100vh - 8rem);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1rem;
@@ -125,40 +131,42 @@ const SignIn= () => {
   }, [persist]);
   
   return (
-    <Container>
-      <Form onSubmit={handleSignIn}>
-        <FormTitle>Sign In</FormTitle>
-        <InputDiv>
-          <InputLabel htmlFor='username'>
-            Username:
-          </InputLabel>
-          <Input
-            type='text'
-            id='username'
-            ref={userRef}
-            autoComplete='off'
-            required
-            onChange={({ target }) => setUsername(target.value)}
-            value={username}/>
-        </InputDiv>
-        <InputDiv>
-          <InputLabel htmlFor='password'>
-            Password:
-          </InputLabel>
-          <Input
-            type='password'
-            id='password'
-            required
-            onChange={({ target }) => setPassword(target.value)}
-            value={password}/>
-        </InputDiv>
-        <SubmitButton disabled={!username || !password ? true : false}>Sign In</SubmitButton>
-        <div>
-          <label htmlFor="persist">Trust this device</label>
-          <input type="checkbox" name="persist" id="persist" onChange={togglePersist} checked={persist} />
-        </div>
-      </Form>
-    </Container>
+    <Section>
+      <Container>
+        <Form onSubmit={handleSignIn}>
+          <FormTitle>Sign In</FormTitle>
+          <InputDiv>
+            <InputLabel htmlFor='username'>
+              Username:
+            </InputLabel>
+            <Input
+              type='text'
+              id='username'
+              ref={userRef}
+              autoComplete='off'
+              required
+              onChange={({ target }) => setUsername(target.value)}
+              value={username}/>
+          </InputDiv>
+          <InputDiv>
+            <InputLabel htmlFor='password'>
+              Password:
+            </InputLabel>
+            <Input
+              type='password'
+              id='password'
+              required
+              onChange={({ target }) => setPassword(target.value)}
+              value={password}/>
+          </InputDiv>
+          <SubmitButton disabled={!username || !password ? true : false}>Sign In</SubmitButton>
+          <div>
+            <label htmlFor="persist">Trust this device</label>
+            <input type="checkbox" name="persist" id="persist" onChange={togglePersist} checked={persist} />
+          </div>
+        </Form>
+      </Container>
+    </Section>
   );
 };
 
