@@ -2,7 +2,8 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 const Container = styled.div`
-  min-height: calc(100% - 4rem);
+  min-height: calc(100vh - 8rem);
+  max-width: 80rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -57,7 +58,7 @@ const SignInButton = styled.button`
     line-height: 1.75rem;
     width: 8rem;
   }
-`; // font-size xl
+`;
 
 const SignUpButton = styled(SignInButton)`
   color: #818cf8;

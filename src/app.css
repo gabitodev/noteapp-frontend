@@ -54,9 +54,6 @@ body {
 }
 
 #root {
-  max-width: 80rem;
-  margin-left: auto;
-  margin-right: auto;
   height: 100%;
   position: relative;
 }
