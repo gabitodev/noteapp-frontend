@@ -37,6 +37,11 @@ const ButtonDiv = styled.div`
   gap: 1rem;
 `;
 
+const P = styled.p`
+  white-space: pre-wrap;
+  word-wrap: break-word;
+`;
+
 const Note = ({ note }) => {
   const axiosPrivate = useAxiosPrivate();
   const { notes, setNotes } = useNotes();
@@ -61,7 +66,7 @@ const Note = ({ note }) => {
     <>
       <NoteContainer>
         <NoteTitle>{note.title}</NoteTitle>
-        <p>{note.content}</p>
+        <P>{note.content}</P>
         <ButtonDiv>
           <Link to={`${note.id}`}>Edit</Link>
           <button onClick={() => deleteNote(note.id)}>Delete</button>

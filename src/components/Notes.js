@@ -3,12 +3,14 @@ import Note from './Note';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import styled from 'styled-components';
 import useNotes from '../hooks/useNotes';
-import { Outlet, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
+import CreateNoteMobile from './CreateNoteMobile';
+import CreateNoteDesktop from './CreateNoteDesktop';
+import { Outlet } from 'react-router-dom';
 
 const Container = styled.div`
-  height: calc(100% - 4rem);
+  min-height: calc(100vh - 8rem);
   position: relative;
   overflow: auto;
   display: flex;
@@ -35,13 +37,16 @@ const CreateButton = styled.button`
   font-size: 1.5rem;
   border-radius: 9999px;
   transition: all 0.3s ease-in;
+  @media (min-width: 640px) {
+    display: none;
+  }
 `;
 
 const Notes = () => {
   const { notes, setNotes } = useNotes();
   const axiosPrivate = useAxiosPrivate();
   const [click, setClick] = useState(false);
-  const navigate = useNavigate();
+  const [windowWidth, setWindowWidt] = useState(0);
   
   useEffect(() => {
     const getNotes = async () => {
@@ -52,20 +57,40 @@ const Notes = () => {
   }, [axiosPrivate, setNotes]);
 
   useEffect(() => {
+    const updateWidth = () => {
+      setWindowWidt(window.innerWidth);
+    };
+
+    window.addEventListener('resize', updateWidth);
+    
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
+  useEffect(() => {
     setClick(false);
   }, [notes]);
 
+  useEffect(() => {
+    if (windowWidth > 640) {
+      setClick(false);
+    }
+  }, [windowWidth]);
+
   const handleCreate = () => {
     setClick(!click);
-    !click ? navigate('create') : navigate('/notes');
   }
   
   return (
     <Container>
+      <CreateNoteDesktop />
+      <Outlet />
+      {click && windowWidth < 640
+          ? <CreateNoteMobile />
+          : null
+      }
       {notes.map(note =>
         <Note key={note.id} note={note} />
       )}
-      <Outlet />
       <CreateButton onClick={handleCreate} click={click}>
         <FontAwesomeIcon icon={faPlus} />
       </CreateButton>

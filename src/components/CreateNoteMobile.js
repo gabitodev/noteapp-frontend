@@ -42,6 +42,9 @@ const CreateDiv = styled.div`
   height: 100%;
   color: white;
   animation: ${opacity} 0.5s linear 1;
+  @media (min-width: 640px) {
+    display: none;
+  }
 `;
 
 const Form = styled.form`
@@ -52,6 +55,7 @@ const Form = styled.form`
   flex-direction: column;
   justify-content: space-between;
   min-height: 10rem;
+  max-height: 60%;
   color: white;
   border-radius: 0.5rem;
   padding: 1rem;
@@ -60,9 +64,6 @@ const Form = styled.form`
   transition: all 0.3s ease-in-out;
   border: 1px solid #fbbf24;
   animation: ${width} 0.5s linear 1;
-  @media (min-width: 640px) {
-    width: 25%;
-  }
 `;
 
 const Input = styled.input`
@@ -71,14 +72,19 @@ const Input = styled.input`
   font-weight: 700;
   font-size: 1.125rem;
   line-height: 1.75rem;
+  outline: none;
 `;
 
 const TextArea = styled.textarea`
   color: white;
   background-color: #171717;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  resize: none;
+  outline: none;
 `;
 
-const CreateNote = () => {
+const CreateNoteMobile = () => {
   const navigate = useNavigate();
   const { notes, setNotes } = useNotes();
 
@@ -113,15 +119,20 @@ const CreateNote = () => {
       setTimeout(() => setNotification(null), 5000);
     };
   };
+
+  const handleKeyDown = (e) => {
+    e.target.style.height = "inherit";
+    e.target.style.height = `${e.target.scrollHeight}px`;
+  };
   
   return (
     <CreateDiv>
       <Form onSubmit={handleCreate}>
         <Input type="text" value={title} placeholder='Title' onChange={({ target }) => setTitle(target.value)} />
-        <TextArea name="content" id="" cols="10" rows="2" placeholder='Take a note...' value={content} onChange={({ target }) => setContent(target.value)}></TextArea>
+        <TextArea onKeyDown={handleKeyDown} name="content" id="" cols="1" rows="4" placeholder='Take a note...' value={content} onChange={({ target }) => setContent(target.value)}></TextArea>
         <button type='submit'>Save</button>
       </Form>
     </CreateDiv>
   );
 }
-export default CreateNote;
+export default CreateNoteMobile;

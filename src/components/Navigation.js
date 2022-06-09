@@ -25,7 +25,7 @@ const Nav = styled.nav`
   left: 0;
   width: 100%;
   height: 4rem;
-  background-color : #171717;
+  background-color : #18181b;
   z-index: 2;
 `;
 
