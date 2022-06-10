@@ -7,9 +7,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Section = styled.section`
   min-height: calc(100vh - 8rem);
-  background-color: #18181b;
+  background-color: #1f2937;
 `;
-
 
 const Container = styled.section`
   min-height: calc(100vh - 8rem);
@@ -33,8 +32,9 @@ const Form = styled.form`
   min-height: 26rem;
   border-radius: 0.5rem;
   padding: 1.5rem;
-  background-color: #171717;
+  background-color: #374151;
   color: white;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   @media (min-width: 768px) {
     width: 75%;
   }
@@ -54,6 +54,8 @@ const InputLabel = styled.label`
   color: #fbbf24;
   font-size: 1.25rem;
   line-height: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 `;
 
 const Input = styled.input`
@@ -63,7 +65,7 @@ const Input = styled.input`
   border-radius: 12px;
   padding: 0.5rem;
   outline-style: none;
-  background-color: #222222;
+  background-color: #4b5563;
   &:focus {
     outline: 3px solid #fbbf24;
   }
@@ -78,20 +80,63 @@ const SubmitButton = styled.button`
   border-radius: 0.5rem;
   padding: 0.4rem 0.3rem;
   opacity: ${props => props.disabled ? '0.3' : '1'};
-  transition: all 0.3s ease-in-out;
-  &:hover {
-    background-color: #fbbf24;
-    color: #171717;
-  }
+  transition: all 0.2s ease-in;
   @media (min-width: 1024px) {
     width: 8rem;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      ${ props => props.disabled 
+        ? 'none' 
+        : `color: #1f2937;
+          background-color: #fbbf24;`
+      }
+    }
+    &:active {
+      ${ props => props.disabled 
+        ? 'none' 
+        : `transition: none;
+          outline: 2px solid #f59e0b;
+          background-color: #f59e0b;`
+      }
+    }
+  }
+  @media (hover: none) and (pointer: coarse) {
+    transition: none;
+    &:active {
+      ${ props => props.disabled 
+        ? 'none' 
+        : `background-color: #fbbf24;
+          color: #171717;`
+      }
+    }
   }
 `;
 
 const FormTitle = styled.h3`
   color: #fbbf24;
-  font-size: 1.25rem;
-  line-height: 1.75rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
+`;
+
+const FormCheckDiv = styled.div`
+  width: 100%;
+  display: flex;
+  jusitfy-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const CheckLabel = styled.label`
+  color: #f5f5f5;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+`;
+
+const CheckInput = styled.input`
+  accent-color: #fbbf24;
+  transform: scale(1.1);
 `;
 
 const SignIn= () => {
@@ -108,18 +153,26 @@ const SignIn= () => {
 
   const handleSignIn = async (event) => {
     event.preventDefault();
-    const credentials = await loginService.login({ username, password });
-    setAuth(credentials);
-    setNotification({
-      message: `${username} logged in!`,
-      isError: false,
-    })
-    setTimeout(() => {
-      setNotification(null)
-    }, 5000);
-    setUsername('');
-    setPassword('');
-    navigate('/notes');
+    try {
+      const credentials = await loginService.login({ username, password });
+      setAuth(credentials);
+      setNotification({
+        message: `${username} logged in!`,
+        isError: false,
+      })
+      setTimeout(() => {
+        setNotification(null)
+      }, 5000);
+      setUsername('');
+      setPassword('');
+      navigate('/notes');
+    } catch (error) {
+      setNotification({
+        message: error.response.data.error,
+        isError: true,
+      });
+      setTimeout(() => setNotification(null), 5000);
+    }
   };
 
   const togglePersist = () => {
@@ -134,7 +187,7 @@ const SignIn= () => {
     <Section>
       <Container>
         <Form onSubmit={handleSignIn}>
-          <FormTitle>Sign In</FormTitle>
+          <FormTitle>Log In</FormTitle>
           <InputDiv>
             <InputLabel htmlFor='username'>
               Username:
@@ -160,10 +213,10 @@ const SignIn= () => {
               value={password}/>
           </InputDiv>
           <SubmitButton disabled={!username || !password ? true : false}>Sign In</SubmitButton>
-          <div>
-            <label htmlFor="persist">Trust this device</label>
-            <input type="checkbox" name="persist" id="persist" onChange={togglePersist} checked={persist} />
-          </div>
+          <FormCheckDiv>
+            <CheckLabel htmlFor="persist">Trust this device</CheckLabel>
+            <CheckInput type="checkbox" name="persist" id="persist"  onChange={togglePersist} checked={persist} />
+          </FormCheckDiv>
         </Form>
       </Container>
     </Section>

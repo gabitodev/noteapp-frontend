@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const Container = styled.footer`
   display: flex;
-  background-color: ${props => props.changeBackground ? '#18181b' : 'transparent'};
+  background-color: ${props => props.changeBackground ? '#1f2937' : 'transparent'};
   justify-content: center;
   align-items: center;
   height: 4rem;

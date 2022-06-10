@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import logoutService from '../services/logout';
 import useNotification from '../hooks/useNotification';
@@ -8,6 +8,7 @@ import useNotification from '../hooks/useNotification';
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
+  background-color: #111827;
   align-items: center;
   max-width: 80rem;
   height: inherit;
@@ -23,9 +24,9 @@ const Nav = styled.nav`
   position: fixed;
   top: 0;
   left: 0;
+  background-color: #111827;
   width: 100%;
   height: 4rem;
-  background-color : #18181b;
   z-index: 2;
 `;
 
@@ -54,8 +55,9 @@ const SignUpButton = styled(SignInButton)`
 `;
 
 const Title = styled.h3` 
-  color: white;
+  color: #fbbf24;
   font-weight: 700;
+  
   font-size: 1.5rem;
   line-height: 2rem;
   cursor: pointer;
@@ -84,7 +86,7 @@ const DropDownMenu = styled.div`
   align-items: center;
   justify-content: space-around;
   position: fixed;
-  background-color: #171717;
+  background-color: #202020;
   color: ${props => props.navOpen ? 'white' : '#171717'};
   top: ${props => props.navOpen ? '4rem' : '-2rem'};
   left: 0;
@@ -106,11 +108,44 @@ const Navigation = () => {
   const [navOpen, setNavOpen] = useState(false);
   const { auth, setAuth } = useAuth();
   const { setNotification } = useNotification();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const handleNavOpen = () => {
     setNavOpen(!navOpen);
   }
+
+  const renderNavLinks = (pathname) => {
+    switch (pathname) {
+      case '/signup':
+        return  <Link to='/signin'><SignInButton>Sign In</SignInButton></Link>;
+      case '/signin':
+        return <Link to='/signup'><SignUpButton>Register</SignUpButton></Link>;
+      default:
+        return  <>
+                  <Link to='/signin'>
+                    <SignInButton>Sign In</SignInButton>
+                  </Link>
+                  <Link to='/signup'>
+                    <SignUpButton>Register</SignUpButton>
+                  </Link>
+                </>;
+    };
+  };
+
+  const renderDropDown = (pathname) => {
+    switch (pathname) {
+      case '/signup':
+        return  <Link to='/signin' onClick={handleNavOpen}>Sign In</Link>;
+      case '/signin':
+        return <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>;
+      default:
+        return <>
+                  <Link to='/signin' onClick={handleNavOpen}>Sign In</Link>
+                  <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
+                </>
+    };
+  };
 
   const handleLogout = async () => {
     try {
@@ -144,12 +179,7 @@ const Navigation = () => {
                   <SignInButton onClick={handleLogout}>Logout</SignInButton>
               </NavLinks>
             : <NavLinks>
-                <Link to='/signin'>
-                  <SignInButton>Sign In</SignInButton>
-                </Link>
-                <Link to='/signup'>
-                  <SignUpButton>Register</SignUpButton>
-                </Link>
+                {renderNavLinks(pathname)}
               </NavLinks>
           }
         {navOpen
@@ -170,8 +200,7 @@ const Navigation = () => {
             <Link to='/home' onClick={handleLogout}>Logout</Link>
           </DropDownMenu>
         : <DropDownMenu navOpen={navOpen}>
-            <Link to='/signin' onClick={handleNavOpen}>Sign In</Link>
-            <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
+            {renderDropDown(pathname)}
           </DropDownMenu>
       }
     </Nav>
