@@ -139,7 +139,7 @@ const CheckInput = styled.input`
   transform: scale(1.1);
 `;
 
-const SignIn= () => {
+const Login= () => {
   const userRef = useRef();
   const { setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
@@ -157,7 +157,7 @@ const SignIn= () => {
       const credentials = await loginService.login({ username, password });
       setAuth(credentials);
       setNotification({
-        message: `${username} logged in!`,
+        message: `${username} logged in 🤩`,
         isError: false,
       })
       setTimeout(() => {
@@ -212,7 +212,7 @@ const SignIn= () => {
               onChange={({ target }) => setPassword(target.value)}
               value={password}/>
           </InputDiv>
-          <SubmitButton disabled={!username || !password ? true : false}>Sign In</SubmitButton>
+          <SubmitButton disabled={!username || !password ? true : false}>Login</SubmitButton>
           <FormCheckDiv>
             <CheckLabel htmlFor="persist">Trust this device</CheckLabel>
             <CheckInput type="checkbox" name="persist" id="persist"  onChange={togglePersist} checked={persist} />
@@ -224,4 +224,4 @@ const SignIn= () => {
 };
 
 
-export default SignIn;
+export default Login;
