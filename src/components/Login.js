@@ -19,8 +19,7 @@ const Container = styled.section`
   max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 1rem;
 `;
 
 const Form = styled.form`
