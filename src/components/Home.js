@@ -42,7 +42,7 @@ const SubTitle = styled.h3`
 const SignInButton = styled.button`
   color: #fbbf24;
   width: 6rem;
-  background-color: #171717;
+  background-color: #111827;
   border: 2px solid #fbbf24;
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -51,7 +51,7 @@ const SignInButton = styled.button`
   transition: all 0.3s ease-in-out;
   &:hover {
     background-color: #fbbf24;
-    color: #171717;
+    color: #111827;
   }
   @media (min-width: 640px) {
     font-size: 1.25rem;
@@ -65,7 +65,7 @@ const SignUpButton = styled(SignInButton)`
   border: 2px solid #818cf8;
   &:hover {
     background-color: #818cf8;
-    color: #171717;
+    color: #111827;
   }
 `;
 

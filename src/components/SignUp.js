@@ -6,17 +6,21 @@ import useNotification from '../hooks/useNotification';
 import usersService from '../services/users';
 import { useNavigate } from 'react-router-dom';
 
+const Section = styled.section`
+  min-height: calc(100vh - 8rem);
+  background-color: #1f2937;
+`;
+
 const Container = styled.section`
-  min-height: calc(100% - 4rem);
+  min-height: calc(100vh - 8rem);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding: 1rem;
 `;
 
 const Form = styled.form`
@@ -25,11 +29,12 @@ const Form = styled.form`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  min-height: 30rem;
+  min-height: 32rem;
   border-radius: 0.5rem;
   padding: 1.5rem;
-  background-color: #171717;
+  background-color: #374151;
   color: white;
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
   @media (min-width: 768px) {
     width: 75%;
   }
@@ -49,6 +54,8 @@ const InputLabel = styled.label`
   color: #818cf8;
   font-size: 1.25rem;
   line-height: 1.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
 `;
 
 const Input = styled.input`
@@ -58,7 +65,7 @@ const Input = styled.input`
   border-radius: 12px;
   padding: 0.5rem;
   outline-style: none;
-  background-color: #222222;
+  background-color: #4b5563;
   &:focus {
     outline: 3px solid #818cf8;
   }
@@ -73,13 +80,36 @@ const SubmitButton = styled.button`
   border-radius: 0.5rem;
   padding: 0.4rem 0.3rem;
   opacity: ${props => props.disabled ? '0.3' : '1'};
-  transition: all 0.3s ease-in-out;
-  &:hover {
-    background-color: #818cf8;
-    color: #171717;
-  }
+  transition: all 0.2s ease-in;
   @media (min-width: 1024px) {
     width: 8rem;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      ${ props => props.disabled 
+        ? 'none' 
+        : `color: #1f2937;
+          background-color: #818cf8;`
+      }
+    }
+    &:active {
+      ${ props => props.disabled 
+        ? 'none' 
+        : `transition: none;
+          outline: 2px solid #6366f1;
+          background-color: #6366f1;`
+      }
+    }
+  }
+  @media (hover: none) and (pointer: coarse) {
+    transition: none;
+    &:active {
+      ${ props => props.disabled 
+        ? 'none' 
+        : `background-color: #818cf8;
+          color: #171717;`
+      }
+    }
   }
 `;
 
@@ -105,8 +135,9 @@ const InputInfo = styled.p`
 
 const FormTitle = styled.h3`
   color: #818cf8;
-  font-size: 1.25rem;
-  line-height: 1.75rem;
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 700;
 `;
 
 const USERNAME_REGEX = /^[a-zA-Z][a-za-z0-9-_]{6,16}$/;
@@ -184,107 +215,109 @@ const SignUp = () => {
   };
 
   return (
-    <Container>
-      <Form onSubmit={handleSignUp}>
-        <FormTitle>Register</FormTitle>
-        <InputDiv>
-          <InputLabel htmlFor='username'>
-            Username:
-            <SuccessIcon validInput={validUsername} input={username}>
-              <FontAwesomeIcon icon={faCheck}/>
-            </SuccessIcon>
-            <FailureIcon validInput={validUsername} input={username}>
-              <FontAwesomeIcon icon={faTimes}/>
-            </FailureIcon>
-          </InputLabel>
-          <Input
-            type='text'
-            id='username'
-            ref={userRef}
-            autoComplete='off'
-            required
-            onChange={({ target }) => setUsername(target.value)}
-            onFocus={() => setUsernameFocus(true)}
-            onBlur={() => setUsernameFocus(false)}
-            value={username}/>
-          <InputInfo inputFocus={usernameFocus} input={username} validInput={validUsername}>
-            <FontAwesomeIcon icon={faInfoCircle}/> 6 to 16 characters.<br />
-            Must begin with a letter.<br />
-            Letters, numbers, underscore, hyphens allowed.
-          </InputInfo>
-        </InputDiv>
-        <InputDiv>
-          <InputLabel htmlFor='name'>
-            Name:
-            <SuccessIcon validInput={validName} input={name}>
-              <FontAwesomeIcon icon={faCheck}/>
-            </SuccessIcon>
-            <FailureIcon validInput={validName} input={name}>
-              <FontAwesomeIcon icon={faTimes}/>
-            </FailureIcon>
-          </InputLabel>
-          <Input
-            type='text'
-            id='name'
-            autoComplete='off'
-            required
-            onChange={({ target }) => setName(target.value)}
-            onFocus={() => setNameFocus(true)}
-            onBlur={() => setNameFocus(false)}
-            value={name}/>
-          <InputInfo inputFocus={nameFocus} input={name} validInput={validName}>
-            <FontAwesomeIcon icon={faInfoCircle}/> 6 to 16 characters.<br />
-            First and last name.
-          </InputInfo>
-        </InputDiv>
-        <InputDiv>
-          <InputLabel htmlFor='password'>
-            Password:
-            <SuccessIcon validInput={validPassword} input={password}>
-              <FontAwesomeIcon icon={faCheck}/>
-            </SuccessIcon>
-            <FailureIcon validInput={validPassword} input={password}>
-              <FontAwesomeIcon icon={faTimes}/>
-            </FailureIcon>
-          </InputLabel>
-          <Input
-            type='password'
-            id='password'
-            required
-            onChange={({ target }) => setPassword(target.value)}
-            onFocus={() => setPasswordFocus(true)}
-            onBlur={() => setPasswordFocus(false)}
-            value={password}/>
-          <InputInfo inputFocus={passwordFocus} input={true} validInput={validPassword}>
-            <FontAwesomeIcon icon={faInfoCircle}/> 6 to 24 characters.<br />
-            Must include a letter, a number and a special character.<br />
-          </InputInfo>
-        </InputDiv>
-        <InputDiv>
-          <InputLabel htmlFor='confirmPassword'>
-            Confirm Password:
-            <SuccessIcon validInput={validMatch} input={matchPassword}>
-              <FontAwesomeIcon icon={faCheck}/>
-            </SuccessIcon>
-            <FailureIcon validInput={validMatch} input={matchPassword}>
-              <FontAwesomeIcon icon={faTimes}/>
-            </FailureIcon>
-          </InputLabel>
-          <Input
-            type='password'
-            id='confirmPassword'
-            required
-            onChange={({ target }) => setMatchPassword(target.value)}
-            onFocus={() => setMatchFocus(true)}
-            onBlur={() => setMatchFocus(false)}
-            value={matchPassword}/>
-          <InputInfo inputFocus={matchFocus} input={true} validInput={validMatch}>
-            <FontAwesomeIcon icon={faInfoCircle}/> Must match the first password input field.
-          </InputInfo>
-        </InputDiv>
-        <SubmitButton disabled={!validUsername || !validPassword || !validMatch ? true : false}>Sign Up</SubmitButton>
-      </Form>
-    </Container>
+    <Section>
+      <Container>
+        <Form onSubmit={handleSignUp}>
+          <FormTitle>Register</FormTitle>
+          <InputDiv>
+            <InputLabel htmlFor='username'>
+              Username:
+              <SuccessIcon validInput={validUsername} input={username}>
+                <FontAwesomeIcon icon={faCheck}/>
+              </SuccessIcon>
+              <FailureIcon validInput={validUsername} input={username}>
+                <FontAwesomeIcon icon={faTimes}/>
+              </FailureIcon>
+            </InputLabel>
+            <Input
+              type='text'
+              id='username'
+              ref={userRef}
+              autoComplete='off'
+              required
+              onChange={({ target }) => setUsername(target.value)}
+              onFocus={() => setUsernameFocus(true)}
+              onBlur={() => setUsernameFocus(false)}
+              value={username}/>
+            <InputInfo inputFocus={usernameFocus} input={username} validInput={validUsername}>
+              <FontAwesomeIcon icon={faInfoCircle}/> 6 to 16 characters.<br />
+              Must begin with a letter.<br />
+              Letters, numbers, underscore, hyphens allowed.
+            </InputInfo>
+          </InputDiv>
+          <InputDiv>
+            <InputLabel htmlFor='name'>
+              Name:
+              <SuccessIcon validInput={validName} input={name}>
+                <FontAwesomeIcon icon={faCheck}/>
+              </SuccessIcon>
+              <FailureIcon validInput={validName} input={name}>
+                <FontAwesomeIcon icon={faTimes}/>
+              </FailureIcon>
+            </InputLabel>
+            <Input
+              type='text'
+              id='name'
+              autoComplete='off'
+              required
+              onChange={({ target }) => setName(target.value)}
+              onFocus={() => setNameFocus(true)}
+              onBlur={() => setNameFocus(false)}
+              value={name}/>
+            <InputInfo inputFocus={nameFocus} input={name} validInput={validName}>
+              <FontAwesomeIcon icon={faInfoCircle}/> 6 to 16 characters.<br />
+              First and last name.
+            </InputInfo>
+          </InputDiv>
+          <InputDiv>
+            <InputLabel htmlFor='password'>
+              Password:
+              <SuccessIcon validInput={validPassword} input={password}>
+                <FontAwesomeIcon icon={faCheck}/>
+              </SuccessIcon>
+              <FailureIcon validInput={validPassword} input={password}>
+                <FontAwesomeIcon icon={faTimes}/>
+              </FailureIcon>
+            </InputLabel>
+            <Input
+              type='password'
+              id='password'
+              required
+              onChange={({ target }) => setPassword(target.value)}
+              onFocus={() => setPasswordFocus(true)}
+              onBlur={() => setPasswordFocus(false)}
+              value={password}/>
+            <InputInfo inputFocus={passwordFocus} input={true} validInput={validPassword}>
+              <FontAwesomeIcon icon={faInfoCircle}/> 6 to 24 characters.<br />
+              Must include a letter, a number and a special character.<br />
+            </InputInfo>
+          </InputDiv>
+          <InputDiv>
+            <InputLabel htmlFor='confirmPassword'>
+              Confirm Password:
+              <SuccessIcon validInput={validMatch} input={matchPassword}>
+                <FontAwesomeIcon icon={faCheck}/>
+              </SuccessIcon>
+              <FailureIcon validInput={validMatch} input={matchPassword}>
+                <FontAwesomeIcon icon={faTimes}/>
+              </FailureIcon>
+            </InputLabel>
+            <Input
+              type='password'
+              id='confirmPassword'
+              required
+              onChange={({ target }) => setMatchPassword(target.value)}
+              onFocus={() => setMatchFocus(true)}
+              onBlur={() => setMatchFocus(false)}
+              value={matchPassword}/>
+            <InputInfo inputFocus={matchFocus} input={true} validInput={validMatch}>
+              <FontAwesomeIcon icon={faInfoCircle}/> Must match the first password input field.
+            </InputInfo>
+          </InputDiv>
+          <SubmitButton disabled={!validUsername || !validPassword || !validMatch ? true : false}>Sign Up</SubmitButton>
+        </Form>
+      </Container>
+    </Section>
   );
 };
 
