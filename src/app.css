@@ -62,6 +62,24 @@ body {
   color-scheme: dark;
 }
 
+.my-masonry-grid {
+  display: -webkit-box; /* Not needed if autoprefixing */
+  display: -ms-flexbox; /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -1rem; /* gutter size offset */
+  width: 100%;
+}
+
+.my-masonry-grid_column {
+  padding-left: 1rem; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
+  margin-bottom: 1rem;
+}
+
 /*
 1. Add the correct height in Firefox.
 2. Correct the inheritance of border color in Firefox. (https://bugzilla.mozilla.org/show_bug.cgi?id=190655)

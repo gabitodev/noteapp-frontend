@@ -86,8 +86,8 @@ const DropDownMenu = styled.div`
   align-items: center;
   justify-content: space-around;
   position: fixed;
-  background-color: #202020;
-  color: ${props => props.navOpen ? 'white' : '#171717'};
+  background-color: #111827;
+  color: ${props => props.navOpen ? 'white' : '#111827'};
   top: ${props => props.navOpen ? '4rem' : '-2rem'};
   left: 0;
   right: 0;

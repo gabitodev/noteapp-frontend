@@ -22,7 +22,7 @@ const CreateNoteDiv = styled.div`
 `;
 
 const Form = styled.form`
-  background-color: #18181b;
+  background-color: #374151;
   width: 50%;
   display: flex;
   flex-direction: column;
@@ -36,7 +36,7 @@ const Form = styled.form`
 
 const CreateNoteInput = styled.input`
   width: 100%;
-  background-color: #18181b;
+  background-color: #374151;
   font-size: 1.25rem;
   line-height: 1.75rem;
   font-weight: 700;
@@ -48,7 +48,7 @@ const SecondInput = styled.textarea`
   font-size: 1.125rem;
   line-height: 1.50rem;
   font-weight: 400;
-  background-color: #18181b;
+  background-color: #374151;
   white-space: pre-wrap;
   word-wrap: break-word;
   resize: none;
@@ -65,7 +65,7 @@ const ShowDiv = styled.div`
 
 const ButtonDiv = styled.div`
   width: 100%;
-  background-color: #18181b;
+  background-color: #374151;
   border-radius: 0 0 0.5rem 0.5rem;
   gap: 1rem;
   display: flex;
@@ -82,12 +82,12 @@ const Button = styled.button`
   transition: all 0.3s ease-in-out;
   width: 15%;
   &:hover {
-    background-color: #27272a;
+    background-color: #4b5563;
   }
 `;
 
 const CreateNoteDesktop = () => {
-  const [isCreating, setIsCreating] = useState(true);
+  const [isCreating, setIsCreating] = useState(false);
   const navigate = useNavigate();
   const { notes, setNotes } = useNotes();
 

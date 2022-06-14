@@ -8,6 +8,7 @@ import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import CreateNoteMobile from './CreateNoteMobile';
 import CreateNoteDesktop from './CreateNoteDesktop';
 import { Outlet } from 'react-router-dom';
+import Masonry from 'react-masonry-css';
 
 const Container = styled.div`
   min-height: calc(100vh - 8rem);
@@ -19,8 +20,8 @@ const Container = styled.div`
   align-items: flex-start;
   align-content: flex-start;
   justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
+  gap: 1rem;
+  max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
   padding: 1rem;
@@ -80,6 +81,13 @@ const Notes = () => {
     setClick(!click);
   }
   
+  const breakpointColumnsObj = {
+    default: 4,
+    1024: 3,
+    768: 3,
+    640: 1
+  };
+
   return (
     <Container>
       <CreateNoteDesktop />
@@ -88,9 +96,18 @@ const Notes = () => {
           ? <CreateNoteMobile />
           : null
       }
-      {notes.map(note =>
-        <Note key={note.id} note={note} />
-      )}
+
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
+        {notes.map(note =>
+        <div key={note.id}>
+          <Note note={note} />
+        </div>
+        )}
+      </Masonry>
       <CreateButton onClick={handleCreate} click={click}>
         <FontAwesomeIcon icon={faPlus} />
       </CreateButton>

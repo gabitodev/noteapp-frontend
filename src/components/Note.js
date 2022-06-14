@@ -5,7 +5,7 @@ import useNotification from '../hooks/useNotification';
 import { Link } from 'react-router-dom';
 
 const NoteContainer = styled.div`
-  background-color: #171717;
+  background-color: #374151;
   position: static;
   width: 100%;
   display: flex;
@@ -18,9 +18,6 @@ const NoteContainer = styled.div`
   gap: 1rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   transition: all 0.3s ease-in-out;
-  @media (min-width: 640px) {
-    width: 25%;
-  }
 `;
 
 const NoteTitle = styled.h3`
@@ -30,16 +27,27 @@ const NoteTitle = styled.h3`
 `;
 
 const ButtonDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  width: 100%;
+  background-color: #374151;
   gap: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `;
 
 const P = styled.p`
   white-space: pre-wrap;
   word-wrap: break-word;
+`;
+
+const Button = styled.button`
+  width: 4rem;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.3rem;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    background-color: #4b5563;
+  }
 `;
 
 const Note = ({ note }) => {
@@ -68,8 +76,8 @@ const Note = ({ note }) => {
         <NoteTitle>{note.title}</NoteTitle>
         <P>{note.content}</P>
         <ButtonDiv>
-          <Link to={`${note.id}`}>Edit</Link>
-          <button onClick={() => deleteNote(note.id)}>Delete</button>
+          <Link to={`${note.id}`}><Button>Edit</Button></Link>
+          <Button onClick={() => deleteNote(note.id)}>Delete</Button>
         </ButtonDiv>
       </NoteContainer>
     </>

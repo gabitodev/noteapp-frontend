@@ -45,7 +45,7 @@ const EditDiv = styled.div`
 `;
 
 const Form = styled.form`
-  background-color: #171717;
+  background-color: #374151;
   position: static;
   width: 100%;
   display: flex;
@@ -54,28 +54,66 @@ const Form = styled.form`
   min-height: 10rem;
   color: white;
   border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 0.7rem 1rem;
   gap: 1rem;
+  max-height: 20rem;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   transition: all 0.3s ease-in-out;
   border: 1px solid #fbbf24;
   animation: ${width} 0.5s linear 1;
   @media (min-width: 640px) {
-    width: 25%;
+    width: 75%;
+    max-width: 80rem;
+  }
+  @media (min-width: 1024px) {
+    width: 50%;
+    max-width: 80rem;
+  }
+  @media (min-width: 1440px) {
+    width: 35%;
+    max-width: 80rem;
   }
 `;
 
 const Input = styled.input`
   color: white;
-  background-color: #171717;
+  background-color: #374151;
   font-weight: 700;
   font-size: 1.125rem;
   line-height: 1.75rem;
+  outline: none;
 `;
 
 const TextArea = styled.textarea`
   color: white;
-  background-color: #171717;
+  font-weight: 400;
+  background-color: #374151;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  resize: none;
+  outline: none;
+`;
+
+const ButtonDiv = styled.div`
+  width: 100%;
+  background-color: #374151;
+  gap: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`;
+
+
+const Button = styled.button`
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.3rem;
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    background-color: #4b5563;
+  }
+  @media (min-width: 640px) {
+    width: 15%;
+  }
 `;
 
 const EditNote = () => {
@@ -120,14 +158,22 @@ const EditNote = () => {
     setContent(note.content);
     navigate('/notes')
   };
+
+  const handleKeyDown = (e) => {
+    e.target.style.height = "inherit";
+    e.target.style.height = `${e.target.scrollHeight}px`;
+  };
+
   
   return (
     <EditDiv>
       <Form onSubmit={(event) => handleEdit(event, note.id)}>
         <Input type="text" value={title} onChange={({ target }) => setTitle(target.value)} />
-        <TextArea name="content" id="" cols="10" rows="2" value={content} onChange={({ target }) => setContent(target.value)}></TextArea>
-        <button type='submit'>Save</button>
-        <button type='button' onClick={handleCancel}>Cancel</button>
+        <TextArea name="content" id="content" onKeyDown={handleKeyDown} cols="10" rows="3" value={content} onChange={({ target }) => setContent(target.value)}></TextArea>
+        <ButtonDiv>
+          <Button type='submit'>Save</Button>
+          <Button type='button' onClick={handleCancel}>Cancel</Button>
+        </ButtonDiv>
       </Form>
     </EditDiv>
   );
