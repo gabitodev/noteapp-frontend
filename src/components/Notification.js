@@ -5,7 +5,11 @@ const NotificationDiv = styled.div`
   position: absolute;
   top: 2em;
   left: 0;
+  right: 0;
   width: 100%;
+  max-width: 80rem;
+  margin-right: auto;
+  margin-left: auto;
   padding-left: 1rem;
   padding-right: 1rem;
   z-index: 1;

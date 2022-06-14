@@ -3,6 +3,8 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import useNotes from '../hooks/useNotes';
 import useNotification from '../hooks/useNotification';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
 const NoteContainer = styled.div`
   background-color: #374151;
@@ -41,7 +43,6 @@ const P = styled.p`
 `;
 
 const Button = styled.button`
-  width: 4rem;
   border-radius: 0.5rem;
   padding: 0.4rem 0.3rem;
   transition: all 0.3s ease-in-out;
@@ -76,8 +77,14 @@ const Note = ({ note }) => {
         <NoteTitle>{note.title}</NoteTitle>
         <P>{note.content}</P>
         <ButtonDiv>
-          <Link to={`${note.id}`}><Button>Edit</Button></Link>
-          <Button onClick={() => deleteNote(note.id)}>Delete</Button>
+          <Link to={`${note.id}`}>
+            <Button>
+              <FontAwesomeIcon style={{width: '2rem'}} icon={faPenToSquare}/>
+            </Button>
+          </Link>
+          <Button onClick={() => deleteNote(note.id)}>
+            <FontAwesomeIcon style={{width: '2rem'}} icon={faTrash}/>
+          </Button>
         </ButtonDiv>
       </NoteContainer>
     </>
