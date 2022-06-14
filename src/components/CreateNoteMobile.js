@@ -48,7 +48,7 @@ const CreateDiv = styled.div`
 `;
 
 const Form = styled.form`
-  background-color: #171717;
+  background-color: #374151;
   position: static;
   width: 100%;
   display: flex;
@@ -68,7 +68,7 @@ const Form = styled.form`
 
 const Input = styled.input`
   color: white;
-  background-color: #171717;
+  background-color: #374151;
   font-weight: 700;
   font-size: 1.125rem;
   line-height: 1.75rem;
@@ -77,7 +77,7 @@ const Input = styled.input`
 
 const TextArea = styled.textarea`
   color: white;
-  background-color: #171717;
+  background-color: #374151;
   white-space: pre-wrap;
   word-wrap: break-word;
   resize: none;
