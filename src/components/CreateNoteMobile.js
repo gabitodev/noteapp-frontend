@@ -6,18 +6,6 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import useNotification from '../hooks/useNotification';
 import { useNavigate } from 'react-router-dom';
 
-const width = keyframes`
-  from {
-    width: 15%;
-    opacity: 0;
-  }
-
-  to {
-    widh: 100%;
-    opacity: 1;
-  }
-`;
-
 const opacity = keyframes`
   from {
     opacity: 0;
@@ -63,7 +51,6 @@ const Form = styled.form`
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   transition: all 0.3s ease-in-out;
   border: 1px solid #fbbf24;
-  animation: ${width} 0.5s linear 1;
 `;
 
 const Input = styled.input`
@@ -84,12 +71,28 @@ const TextArea = styled.textarea`
   outline: none;
 `;
 
+const BottomDiv = styled.div `
+  width: 100%;
+  background-color: #374151;
+  border-radius: 0 0 0.5rem 0.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const CategoryInput = styled.input`
+  font-weight: 400;
+  background-color: #374151;
+  outline: none;
+`;
+
 const CreateNoteMobile = () => {
   const navigate = useNavigate();
   const { notes, setNotes } = useNotes();
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [category, setCategory] = useState('');
 
   const axiosPrivate = useAxiosPrivate();
   const { setNotification } = useNotification();
@@ -99,6 +102,7 @@ const CreateNoteMobile = () => {
     const noteToCreate= {
       title,
       content,
+      category
     };
     try {
       const {data: createdNote} = await axiosPrivate.post('/', noteToCreate);
@@ -111,6 +115,7 @@ const CreateNoteMobile = () => {
       navigate('/notes');
       setTitle('');
       setContent('');
+      setCategory('');
     } catch (error) {
       setNotification({
         message: error.response.data.error,
@@ -130,7 +135,10 @@ const CreateNoteMobile = () => {
       <Form onSubmit={handleCreate}>
         <Input type="text" value={title} placeholder='Title' onChange={({ target }) => setTitle(target.value)} />
         <TextArea onKeyDown={handleKeyDown} name="content" id="" cols="1" rows="4" placeholder='Take a note...' value={content} onChange={({ target }) => setContent(target.value)}></TextArea>
-        <button type='submit'>Save</button>
+        <BottomDiv>
+          <CategoryInput type="text" placeholder='Category' value={category} onChange={({ target }) => setCategory(target.value)} />
+          <button type='submit'>Save</button>
+        </BottomDiv>
       </Form>
     </CreateDiv>
   );
