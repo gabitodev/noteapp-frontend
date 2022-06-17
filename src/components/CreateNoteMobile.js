@@ -87,16 +87,18 @@ const CategoryInput = styled.input`
 `;
 
 const CreateNoteMobile = () => {
-  const navigate = useNavigate();
-  const { notes, setNotes } = useNotes();
-
+  // States
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
 
+  // Hooks
+  const navigate = useNavigate();
+  const { notes, setNotes } = useNotes();
   const axiosPrivate = useAxiosPrivate();
   const { setNotification } = useNotification();
   
+  // Handlers
   const handleCreate = async (event) => {
     event.preventDefault();
     const noteToCreate= {
@@ -130,11 +132,20 @@ const CreateNoteMobile = () => {
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
   
+  // Component
   return (
     <CreateDiv>
       <Form onSubmit={handleCreate}>
         <Input type="text" value={title} placeholder='Title' onChange={({ target }) => setTitle(target.value)} />
-        <TextArea onKeyDown={handleKeyDown} name="content" id="" cols="1" rows="4" placeholder='Take a note...' value={content} onChange={({ target }) => setContent(target.value)}></TextArea>
+        <TextArea 
+          onKeyDown={handleKeyDown} 
+          name="content" 
+          cols="1" 
+          rows="4" 
+          placeholder='Take a note...' 
+          value={content} 
+          onChange={({ target }) => setContent(target.value)}>
+        </TextArea>
         <BottomDiv>
           <CategoryInput type="text" placeholder='Category' value={category} onChange={({ target }) => setCategory(target.value)} />
           <button type='submit'>Save</button>
