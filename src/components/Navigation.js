@@ -2,13 +2,14 @@ import styled from 'styled-components';
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
-import logoutService from '../services/logout';
 import useNotification from '../hooks/useNotification';
 import useFilter from '../hooks/useFilter';
 import useNotes from '../hooks/useNotes';
+import logoutService from '../services/logout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faNoteSticky, faTag, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faNoteSticky, faTag, faRightFromBracket, faBars, faX } from '@fortawesome/free-solid-svg-icons';
 
+// Nav styles
 const Container = styled.div`
   display: flex;
   justify-content: space-between;
@@ -47,7 +48,7 @@ const LoginButton = styled.button`
     background-color: #fbbf24;
     color: #171717;
   }
-`; // font-size xl
+`;
 
 const SignUpButton = styled(LoginButton)`
   color: #818cf8;
@@ -65,7 +66,7 @@ const Title = styled.h3`
   font-size: 1.5rem;
   line-height: 2rem;
   cursor: pointer;
-`; // Font-size 2xl
+`;
 
 const NavLinks = styled.div`
   display: none;
@@ -76,7 +77,7 @@ const NavLinks = styled.div`
   }
 `;
 
-const HamburgerIcon = styled.button`
+const IconDiv = styled.div`
   display: block;
   color: #fbbf24;
   @media (min-width: 640px) {
@@ -84,6 +85,7 @@ const HamburgerIcon = styled.button`
   }
 `;
 
+// DropdownMenu styles
 const DropDownMenu = styled.div`
   display: flex;
   flex-direction: column;
@@ -93,9 +95,9 @@ const DropDownMenu = styled.div`
   position: fixed;
   background-color: #111827;
   padding-top: 4rem;
-  color: ${props => props.navOpen ? 'white' : '#111827'};
+  color: ${props => props.isNavOpen ? 'white' : '#111827'};
   top: 0;
-  right: ${props => props.navOpen ? '0' : '-50%'};
+  right: ${props => props.isNavOpen ? '0' : '-50%'};
   height: 100%;
   width: 50%;
   z-index: 2;
@@ -105,83 +107,52 @@ const DropDownMenu = styled.div`
   }
 `;
 
-const Svg = styled.svg`
-  width: 2rem;
-  height: 2rem;
-`;
-
 const DropDownButton = styled.button`
   padding: 1rem;
   width: 100%;
   text-align: start;
+  font-weight: 700;
   background-color: ${props => props.id === props.active ? '#fbbf24' : 'transparent'};
   color: ${props => props.id === props.active ? '#1f2937' : 'white'};
 `;
 
 const Navigation = () => {
-  const [navOpen, setNavOpen] = useState(false);
+  // States
+  const [isNavOpen, setIsNavOpen] = useState(false);
+  const [categories, setCategories ] = useState([]);
+  const [active, setActive] = useState('1');
+
+  //Hooks
   const { auth, setAuth } = useAuth();
   const { setNotification } = useNotification();
-  const [ categories, setCategories ] = useState([]);
   const { filteredNotes, setFilteredNotes } = useFilter();
   const { notes } = useNotes();
   const { pathname } = useLocation();
-  const [active, setActive] = useState('1');
   const navigate = useNavigate();
-
-  const handleNavOpen = () => {
-    setNavOpen(!navOpen);
-  }
 
   useEffect(() => {
     const categories = notes.map(note => note.category);
-    const noDuplicates =[...new Set(categories)]
-    setCategories(noDuplicates);
+    const categoriesWithoutDuplicates =[...new Set(categories)]
+    setCategories(categoriesWithoutDuplicates);
   }, [notes]);
 
   useEffect(() => {
-    if (filteredNotes.lenght === 0) {
+    if (filteredNotes.length === 0) {
       setActive('1');
     }
   }, [filteredNotes]);
 
+  // Handlers
   const filterNotes = (event) => {
     if (event.target.id === '1') {
       setActive(event.target.id);
       setFilteredNotes([]);
-      setNavOpen(!navOpen);
+      setIsNavOpen(!isNavOpen);
     }
-
     setActive(event.target.id);
     const filteredNotes = (notes.filter(note => note.category === event.target.id));
     setFilteredNotes(filteredNotes);
-    setNavOpen(!navOpen);
-  }
-
-  const renderNavLinks = (pathname) => {
-    switch (pathname) {
-      case '/signup':
-        return  <Link to='/login'><LoginButton>Log In</LoginButton></Link>;
-      case '/login':
-        return <Link to='/signup'><SignUpButton>Sign Up</SignUpButton></Link>;
-      default:
-        return null;
-    };
-  };
-
-  const renderDropDown = (pathname) => {
-    switch (pathname) {
-      case '/signup':
-        return  <DropDownButton active={active}>
-                  <Link to='/login' onClick={handleNavOpen}>Log In</Link>
-                </DropDownButton>;
-      case '/login':
-        return  <DropDownButton active={active}>
-                  <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
-                </DropDownButton>;
-      default:
-        return null;
-    };
+    setIsNavOpen(!isNavOpen);
   };
 
   const handleLogout = async () => {
@@ -204,6 +175,42 @@ const Navigation = () => {
     }
   };
 
+  const handleNavOpen = () => {
+    setIsNavOpen(!isNavOpen);
+  }
+
+  // Renders
+  const renderNavLinks = (pathname) => {
+    switch (pathname) {
+      case '/signup':
+        return  <Link to='/login'>
+                  <LoginButton>Log In</LoginButton>
+                </Link>;
+      case '/login':
+        return  <Link to='/signup'>
+                  <SignUpButton>Sign Up</SignUpButton>
+                </Link>;
+      default:
+        return null;
+    };
+  };
+
+  const renderDropDownLinks = (pathname) => {
+    switch (pathname) {
+      case '/signup':
+        return  <DropDownButton active={active}>
+                  <Link to='/login' onClick={handleNavOpen}>Log In</Link>
+                </DropDownButton>;
+      case '/login':
+        return  <DropDownButton active={active}>
+                  <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
+                </DropDownButton>;
+      default:
+        return null;
+    };
+  };
+
+  // Component
   return (
     <Nav>
       <Container>
@@ -219,21 +226,17 @@ const Navigation = () => {
                 {renderNavLinks(pathname)}
               </NavLinks>
           }
-        {navOpen
-          ? <HamburgerIcon onClick={handleNavOpen}>
-              <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path strokeLinecap='round' strokeLinejoin='round' d="M6 18L18 6M6 6l12 12" />
-              </Svg>
-            </HamburgerIcon>
-          : <HamburgerIcon onClick={handleNavOpen}>
-              <Svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                <path strokeLinecap='round' strokeLinejoin='round' d="M4 6h16M4 12h16M4 18h16" />
-              </Svg>
-            </HamburgerIcon>
+        {isNavOpen
+          ? <IconDiv>
+              <FontAwesomeIcon icon={faX} onClick={handleNavOpen} size='lg' color='#fbbf24'/>
+            </IconDiv>
+          : <IconDiv>
+              <FontAwesomeIcon icon={faBars} onClick={handleNavOpen} size='lg' color='#fbbf24'/>
+            </IconDiv>
         }
       </Container>
       {auth.username
-        ? <DropDownMenu navOpen={navOpen}>
+        ? <DropDownMenu isNavOpen={isNavOpen}>
             <DropDownButton active={active} id='1' onClick={filterNotes}>
               <FontAwesomeIcon icon={faNoteSticky}/> All Notes
             </DropDownButton>
@@ -250,8 +253,8 @@ const Navigation = () => {
               </Link>
             </DropDownButton>
           </DropDownMenu>
-        : <DropDownMenu navOpen={navOpen}>
-            {renderDropDown(pathname)}
+        : <DropDownMenu isNavOpen={isNavOpen}>
+            {renderDropDownLinks(pathname)}
           </DropDownMenu>
       }
     </Nav>
