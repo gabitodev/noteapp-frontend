@@ -96,16 +96,15 @@ const Notes = () => {
           ? <CreateNoteMobile />
           : null
       }
-
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
         {notes.map(note =>
-        <div key={note.id}>
-          <Note note={note} />
-        </div>
+          <div key={note.id}>
+            <Note note={note} />
+          </div>
         )}
       </Masonry>
       <CreateButton onClick={handleCreate} click={click}>
