@@ -6,18 +6,6 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import useNotification from '../hooks/useNotification';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const width = keyframes`
-  from {
-    width: 15%;
-    opacity: 0;
-  }
-
-  to {
-    widh: 100%;
-    opacity: 1;
-  }
-`;
-
 const opacity = keyframes`
   from {
     opacity: 0;
@@ -60,7 +48,6 @@ const Form = styled.form`
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   transition: all 0.3s ease-in-out;
   border: 1px solid #fbbf24;
-  animation: ${width} 0.5s linear 1;
   @media (min-width: 640px) {
     width: 75%;
     max-width: 80rem;
@@ -94,25 +81,35 @@ const TextArea = styled.textarea`
   outline: none;
 `;
 
-const ButtonDiv = styled.div`
+const BottomDiv = styled.div `
   width: 100%;
   background-color: #374151;
-  gap: 1rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
 `;
 
+const ButtonDiv = styled.div`
+  display: flex;
+  gap: 0.5rem;
+`;
 
 const Button = styled.button`
   border-radius: 0.5rem;
-  padding: 0.4rem 0.3rem;
+  padding: 0.4rem 0.8rem;
   transition: all 0.3s ease-in-out;
   &:hover {
     background-color: #4b5563;
   }
+`;
+
+const CategoryInput = styled.input`
+  font-weight: 400;
+  background-color: #374151;
+  outline: none;
+  width: 35%;
   @media (min-width: 640px) {
-    width: 15%;
+    width: 50%;
   }
 `;
 
@@ -124,6 +121,7 @@ const EditNote = () => {
 
   const [title, setTitle] = useState(note.title);
   const [content, setContent] = useState(note.content);
+  const [category, setCategory] = useState(note.category);
 
   const axiosPrivate = useAxiosPrivate();
   const { setNotification } = useNotification();
@@ -133,8 +131,8 @@ const EditNote = () => {
     const noteToEdit = {
       title,
       content,
+      category
     };
-
     try {
       const {data: editedNote} = await axiosPrivate.put(id, noteToEdit);
       setNotes(notes.map(note => note.id !== id ? note : editedNote));
@@ -156,6 +154,7 @@ const EditNote = () => {
   const handleCancel = () => {
     setTitle(note.title);
     setContent(note.content);
+    setContent(note.category);
     navigate('/notes')
   };
 
@@ -164,16 +163,18 @@ const EditNote = () => {
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
-  
   return (
     <EditDiv>
       <Form onSubmit={(event) => handleEdit(event, note.id)}>
         <Input type="text" value={title} onChange={({ target }) => setTitle(target.value)} />
         <TextArea name="content" id="content" onKeyDown={handleKeyDown} cols="10" rows="3" value={content} onChange={({ target }) => setContent(target.value)}></TextArea>
-        <ButtonDiv>
-          <Button type='submit'>Save</Button>
-          <Button type='button' onClick={handleCancel}>Cancel</Button>
-        </ButtonDiv>
+        <BottomDiv>
+          <CategoryInput type="text" value={category} onChange={({ target }) => setCategory(target.value)}  />
+          <ButtonDiv>
+            <Button type='submit'>Save</Button>
+            <Button type='button' onClick={handleCancel}>Cancel</Button>
+          </ButtonDiv>
+        </BottomDiv>
       </Form>
     </EditDiv>
   );
