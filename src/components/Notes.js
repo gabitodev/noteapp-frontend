@@ -10,6 +10,7 @@ import CreateNoteMobile from './CreateNoteMobile';
 import CreateNoteDesktop from './CreateNoteDesktop';
 import { Outlet } from 'react-router-dom';
 import Masonry from 'react-masonry-css';
+import useFilter from '../hooks/useFilter';
 
 const Container = styled.div`
   height: 100%;
@@ -59,7 +60,7 @@ const Notes = () => {
   const axiosPrivate = useAxiosPrivate();
   const [click, setClick] = useState(false);
   const [windowWidth, setWindowWidt] = useState(0);
-  const [filter, setFiltered] = useState([]);
+  const { filteredNotes } = useFilter();
 
   useEffect(() => {
     const getNotes = async () => {
@@ -102,7 +103,7 @@ const Notes = () => {
 
   return (
    <Section>
-    <SideBar setFiltered={setFiltered} />
+    <SideBar />
     <Container>
       <CreateNoteDesktop />
       <Outlet />
@@ -115,13 +116,13 @@ const Notes = () => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {filter.length === 0
+        {filteredNotes.length === 0
           ? notes.map(note =>
               <div key={note.id}>
                 <Note note={note} />
               </div>
             )
-          : filter.map(note =>
+          : filteredNotes.map(note =>
             <div key={note.id}>
               <Note note={note} />
             </div>

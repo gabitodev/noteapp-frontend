@@ -5,6 +5,7 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { AuthProvider } from './context/AuthProvider';
 import { NotificationProvider } from './context/NotificationProvider';
 import { NotesProvider } from './context/NotesProvider';
+import { FilterProvider } from './context/FilterProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,7 +14,9 @@ root.render(
       <AuthProvider>
         <NotificationProvider>
           <NotesProvider>
-            <App />
+            <FilterProvider>
+              <App />
+            </FilterProvider>
           </NotesProvider>
         </NotificationProvider>
       </AuthProvider>

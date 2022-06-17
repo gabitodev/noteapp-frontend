@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faNoteSticky, faTag } from '@fortawesome/free-solid-svg-icons';
 import useNotes from '../hooks/useNotes';
 import { useEffect } from 'react';
+import useFilter from '../hooks/useFilter';
 
 const SideBarDiv = styled.div`
   position: sticky;
@@ -34,8 +35,9 @@ const SideBarButton = styled.button`
   transition: all 0.1s ease-out;
 `;
 
-const SideBar = ({setFiltered}) => {
+const SideBar = () => {
   const { notes } = useNotes();
+  const { setFilteredNotes } = useFilter();
   const [categories, setCategories] = useState([]);
   const [activeButton, setActiveButton] = useState('1');
 
@@ -48,12 +50,12 @@ const SideBar = ({setFiltered}) => {
   const filterNotes = (event) => {
     if (event.target.id === '1') {
       setActiveButton(event.target.id);
-      setFiltered([]);
+      setFilteredNotes([]);
     }
 
     setActiveButton(event.target.id);
     const filteredNotes = (notes.filter(note => note.category === event.target.id));
-    setFiltered(filteredNotes);
+    setFilteredNotes(filteredNotes);
   }
 
   return (

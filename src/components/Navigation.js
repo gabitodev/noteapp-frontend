@@ -84,14 +84,15 @@ const DropDownMenu = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: flex-start;
   position: fixed;
   background-color: #111827;
+  padding-top: 4rem;
   color: ${props => props.navOpen ? 'white' : '#111827'};
-  top: ${props => props.navOpen ? '4rem' : '-2rem'};
-  left: 0;
-  right: 0;
-  height: 6rem;
+  top: 0;
+  right: ${props => props.navOpen ? '0' : '-6rem'};
+  height: 100%;
+  width: ${props => props.navOpen ? '50%' : '0'};
   z-index: 2;
   transition: all 0.3s ease-out;
   @media (min-width: 640px) {
@@ -102,6 +103,10 @@ const DropDownMenu = styled.div`
 const Svg = styled.svg`
   width: 2rem;
   height: 2rem;
+`;
+
+const DropDownLink = styled.div`
+  padding: 1rem;
 `;
 
 const Navigation = () => {
@@ -122,28 +127,22 @@ const Navigation = () => {
       case '/login':
         return <Link to='/signup'><SignUpButton>Sign Up</SignUpButton></Link>;
       default:
-        return  <>
-                  {/* <Link to='/login'>
-                    <LoginButton>Log In</LoginButton>
-                  </Link>
-                  <Link to='/signup'>
-                    <SignUpButton>Sign Up</SignUpButton>
-                  </Link> */}
-                </>;
+        return null;
     };
   };
 
   const renderDropDown = (pathname) => {
     switch (pathname) {
       case '/signup':
-        return  <Link to='/login' onClick={handleNavOpen}>Log In</Link>;
-      case '/signin':
-        return <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>;
+        return  <DropDownLink>
+                  <Link to='/login' onClick={handleNavOpen}>Log In</Link>
+                </DropDownLink>
+      case '/login':
+        return <DropDownLink>
+                <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
+              </DropDownLink>
       default:
-        return <>
-                  {/* <Link to='/login' onClick={handleNavOpen}>Log In</Link>
-                  <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link> */}
-                </>
+        return null;
     };
   };
 
@@ -197,7 +196,9 @@ const Navigation = () => {
       </Container>
       {auth.username
         ? <DropDownMenu navOpen={navOpen}>
-            <Link to='/home' onClick={handleLogout}>Sign Out</Link>
+            <DropDownLink>
+              <Link to='/' onClick={handleLogout}>Sign Out</Link>
+            </DropDownLink>
           </DropDownMenu>
         : <DropDownMenu navOpen={navOpen}>
             {renderDropDown(pathname)}
