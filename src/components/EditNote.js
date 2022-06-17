@@ -6,6 +6,7 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import useNotification from '../hooks/useNotification';
 import { useNavigate, useParams } from 'react-router-dom';
 
+// Animation
 const opacity = keyframes`
   from {
     opacity: 0;
@@ -16,6 +17,7 @@ const opacity = keyframes`
   }
 `;
 
+// Styles
 const EditDiv = styled.div`
   position: fixed;
   display: flex;
@@ -114,18 +116,22 @@ const CategoryInput = styled.input`
 `;
 
 const EditNote = () => {
+  // Hooks
   const navigate = useNavigate();
   const id = useParams().id;
   const { notes, setNotes } = useNotes();
+  const axiosPrivate = useAxiosPrivate();
+  const { setNotification } = useNotification();
+
+  // Note to edit
   const note = notes.find(note => note.id === id);
 
+  // States
   const [title, setTitle] = useState(note.title);
   const [content, setContent] = useState(note.content);
   const [category, setCategory] = useState(note.category);
 
-  const axiosPrivate = useAxiosPrivate();
-  const { setNotification } = useNotification();
-  
+  // Handlers
   const handleEdit = async (event, id) => {
     event.preventDefault();
     const noteToEdit = {
@@ -163,6 +169,7 @@ const EditNote = () => {
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
+  // Component
   return (
     <EditDiv>
       <Form onSubmit={(event) => handleEdit(event, note.id)}>
