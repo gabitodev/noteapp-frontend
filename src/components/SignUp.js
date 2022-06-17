@@ -199,7 +199,7 @@ const SignUp = () => {
         message: `User ${username} created!`,
         isError: false,
       });
-      setTimeout(() => setNotification(null), 5000);
+      setTimeout(() => setNotification(null), 3000);
       setUsername('');
       setName('');
       setPassword('');
@@ -210,7 +210,7 @@ const SignUp = () => {
         message: error.response.data.error,
         isError: true,
       });
-      setTimeout(() => setNotification(null), 5000);
+      setTimeout(() => setNotification(null), 3000);
     }
   };
 

@@ -73,7 +73,7 @@ const Note = ({ note }) => {
         message: `Note '${noteToDelete.title}' removed successfully 👍`,
         iseError: false,
       });
-      setTimeout(() => setNotification(null), 5000);
+      setTimeout(() => setNotification(null), 3000);
     } catch (error) {
       console.error(error);
     }

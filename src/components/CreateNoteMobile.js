@@ -113,7 +113,7 @@ const CreateNoteMobile = () => {
         message: `Note '${createdNote.title}' created successfully 👍`,
         iseError: false,
       });
-      setTimeout(() => setNotification(null), 5000);
+      setTimeout(() => setNotification(null), 3000);
       navigate('/notes');
       setTitle('');
       setContent('');
@@ -123,7 +123,7 @@ const CreateNoteMobile = () => {
         message: error.response.data.error,
         iseError: true,
       });
-      setTimeout(() => setNotification(null), 5000);
+      setTimeout(() => setNotification(null), 3000);
     };
   };
 

@@ -146,14 +146,14 @@ const EditNote = () => {
         message: `Note '${editedNote.title}' edited successfully 👍`,
         iseError: false,
       });
-      setTimeout(() => setNotification(null), 5000);
+      setTimeout(() => setNotification(null), 3000);
       navigate('/notes');
     } catch (error) {
       setNotification({
         message: error.response.data.error,
         iseError: true,
       });
-      setTimeout(() => setNotification(null), 5000);
+      setTimeout(() => setNotification(null), 3000);
     };
   };
 

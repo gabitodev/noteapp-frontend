@@ -135,13 +135,13 @@ const CreateNoteDesktop = () => {
         message: `Note '${createdNote.title}' created successfully 👍`,
         iseError: false,
       });
-      setTimeout(() => setNotification(null), 5000);
+      setTimeout(() => setNotification(null), 3000);
     } catch (error) {
       setNotification({
         message: error.response.data.error,
         iseError: true,
       });
-      setTimeout(() => setNotification(null), 5000);
+      setTimeout(() => setNotification(null), 3000);
     };
   };
 

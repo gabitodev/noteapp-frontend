@@ -159,9 +159,7 @@ const Login= () => {
         message: `${username} logged in 🤩`,
         isError: false,
       })
-      setTimeout(() => {
-        setNotification(null)
-      }, 5000);
+      setTimeout(() => setNotification(null), 3000);
       setUsername('');
       setPassword('');
       navigate('/notes');
@@ -170,7 +168,7 @@ const Login= () => {
         message: error.response.data.error,
         isError: true,
       });
-      setTimeout(() => setNotification(null), 5000);
+      setTimeout(() => setNotification(null), 3000);
     }
   };
 
