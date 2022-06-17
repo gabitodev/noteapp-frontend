@@ -111,15 +111,15 @@ const CreateNoteDesktop = () => {
     try {
       const {data: createdNote} = await axiosPrivate.post('/', noteToCreate);
       setNotes(notes.concat(createdNote));
+      setTitle('');
+      setContent('');
+      setIsCreating(false);
+      navigate('/notes');
       setNotification({
         message: `Note '${createdNote.title}' created successfully 👍`,
         iseError: false,
       });
       setTimeout(() => setNotification(null), 5000);
-      setTitle('');
-      setContent('');
-      setIsCreating(false);
-      navigate('/notes');
     } catch (error) {
       setNotification({
         message: error.response.data.error,

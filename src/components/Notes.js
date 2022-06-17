@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Note from './Note';
+import SideBar from './SideBar';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import styled from 'styled-components';
 import useNotes from '../hooks/useNotes';
@@ -10,8 +11,8 @@ import CreateNoteDesktop from './CreateNoteDesktop';
 import { Outlet } from 'react-router-dom';
 import Masonry from 'react-masonry-css';
 
-const Container = styled.section`
-  min-height: calc(100vh - 8rem);
+const Container = styled.div`
+  height: 100%;
   position: relative;
   overflow: auto;
   display: flex;
@@ -21,6 +22,16 @@ const Container = styled.section`
   align-content: flex-start;
   justify-content: center;
   gap: 1rem;
+  width: 100%;
+  @media (min-width: 640px) {
+    border-left: 1px solid #fbbf24;
+    padding-left: 1rem;
+  }
+`;
+
+const Section = styled.section`
+  display: flex;
+  min-height: calc(100vh - 8rem);
   max-width: 80rem;
   margin-left: auto;
   margin-right: auto;
@@ -89,12 +100,14 @@ const Notes = () => {
   };
 
   return (
+   <Section>
+    <SideBar />
     <Container>
       <CreateNoteDesktop />
       <Outlet />
       {click && windowWidth < 640
-          ? <CreateNoteMobile />
-          : null
+        ? <CreateNoteMobile />
+        : null
       }
       <Masonry
         breakpointCols={breakpointColumnsObj}
@@ -107,10 +120,11 @@ const Notes = () => {
           </div>
         )}
       </Masonry>
-      <CreateButton onClick={handleCreate} click={click}>
-        <FontAwesomeIcon icon={faPlus} />
-      </CreateButton>
-    </Container>
+        <CreateButton onClick={handleCreate} click={click}>
+          <FontAwesomeIcon icon={faPlus} />
+        </CreateButton>
+      </Container>
+   </Section> 
   );
 };
 
