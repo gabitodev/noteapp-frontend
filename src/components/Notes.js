@@ -10,7 +10,7 @@ import CreateNoteDesktop from './CreateNoteDesktop';
 import { Outlet } from 'react-router-dom';
 import Masonry from 'react-masonry-css';
 
-const Container = styled.div`
+const Container = styled.section`
   min-height: calc(100vh - 8rem);
   position: relative;
   overflow: auto;

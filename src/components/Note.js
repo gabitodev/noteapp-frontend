@@ -79,11 +79,11 @@ const Note = ({ note }) => {
         <ButtonDiv>
           <Link to={`${note.id}`}>
             <Button>
-              <FontAwesomeIcon style={{width: '2rem'}} icon={faPenToSquare}/>
+              <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faPenToSquare}/>
             </Button>
           </Link>
           <Button onClick={() => deleteNote(note.id)}>
-            <FontAwesomeIcon style={{width: '2rem'}} icon={faTrash}/>
+            <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faTrash}/>
           </Button>
         </ButtonDiv>
       </NoteContainer>
