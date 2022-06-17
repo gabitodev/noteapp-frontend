@@ -98,17 +98,19 @@ const CategoryInput = styled.input`
 `;
 
 const CreateNoteDesktop = () => {
+  // States
   const [isCreating, setIsCreating] = useState(false);
-  const navigate = useNavigate();
-  const { notes, setNotes } = useNotes();
-
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [category, setCategory] = useState('');
 
+  // Hooks
+  const navigate = useNavigate();
+  const { notes, setNotes } = useNotes();
   const axiosPrivate = useAxiosPrivate();
   const { setNotification } = useNotification();
 
+  // Handlers
   const handleKeyDown = (e) => {
     e.target.style.height = "inherit";
     e.target.style.height = `${e.target.scrollHeight}px`;
@@ -143,6 +145,7 @@ const CreateNoteDesktop = () => {
     };
   };
 
+  // Component
   return (
     <CreateNoteDiv>
       <Form onSubmit={handleCreate}>
