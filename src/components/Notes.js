@@ -59,7 +59,8 @@ const Notes = () => {
   const axiosPrivate = useAxiosPrivate();
   const [click, setClick] = useState(false);
   const [windowWidth, setWindowWidt] = useState(0);
-  
+  const [filter, setFiltered] = useState([]);
+
   useEffect(() => {
     const getNotes = async () => {
       const { data: fetchNotes } = await axiosPrivate.get();
@@ -101,7 +102,7 @@ const Notes = () => {
 
   return (
    <Section>
-    <SideBar />
+    <SideBar setFiltered={setFiltered} />
     <Container>
       <CreateNoteDesktop />
       <Outlet />
@@ -114,11 +115,18 @@ const Notes = () => {
         className="my-masonry-grid"
         columnClassName="my-masonry-grid_column"
       >
-        {notes.map(note =>
-          <div key={note.id}>
-            <Note note={note} />
-          </div>
-        )}
+        {filter.length === 0
+          ? notes.map(note =>
+              <div key={note.id}>
+                <Note note={note} />
+              </div>
+            )
+          : filter.map(note =>
+            <div key={note.id}>
+              <Note note={note} />
+            </div>
+            )
+        }
       </Masonry>
         <CreateButton onClick={handleCreate} click={click}>
           <FontAwesomeIcon icon={faPlus} />

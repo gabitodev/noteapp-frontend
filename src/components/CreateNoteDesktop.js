@@ -64,12 +64,16 @@ const ShowDiv = styled.div`
 `;
 
 const ButtonDiv = styled.div`
+  display: flex;
+  gap: 1rem;
+`;
+
+const BottomDiv = styled.div `
   width: 100%;
   background-color: #374151;
   border-radius: 0 0 0.5rem 0.5rem;
-  gap: 1rem;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
 `;
 
@@ -78,12 +82,19 @@ const Button = styled.button`
   font-size: 1.125rem;
   line-height: 1.50rem;
   font-weight: 700;
-  padding: 0.4rem 0.3rem;
+  padding: 0.4rem 0.8rem;
   transition: all 0.3s ease-in-out;
-  width: 15%;
   &:hover {
     background-color: #4b5563;
   }
+`;
+
+const CategoryInput = styled.input`
+  font-size: 1.125rem;
+  line-height: 1.50rem;
+  font-weight: 400;
+  background-color: #374151;
+  outline: none;
 `;
 
 const CreateNoteDesktop = () => {
@@ -93,6 +104,7 @@ const CreateNoteDesktop = () => {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [category, setCategory] = useState('');
 
   const axiosPrivate = useAxiosPrivate();
   const { setNotification } = useNotification();
@@ -107,12 +119,14 @@ const CreateNoteDesktop = () => {
     const noteToCreate= {
       title,
       content,
+      category
     };
     try {
       const {data: createdNote} = await axiosPrivate.post('/', noteToCreate);
       setNotes(notes.concat(createdNote));
       setTitle('');
       setContent('');
+      setCategory('');
       setIsCreating(false);
       navigate('/notes');
       setNotification({
@@ -147,10 +161,13 @@ const CreateNoteDesktop = () => {
           onChange={({ target }) => setContent(target.value)}
           placeholder='Take a note...'
           value={content} />
-          <ButtonDiv>
-            <Button type='submit'>Save</Button>
-            <Button type='button' onClick={() => setIsCreating(false)}>Cancel</Button>
-          </ButtonDiv>
+          <BottomDiv>
+            <CategoryInput type="text" placeholder='Category' value={category} onChange={({ target }) => setCategory(target.value)} />
+            <ButtonDiv>
+              <Button type='submit'>Save</Button>
+              <Button type='button' onClick={() => setIsCreating(false)}>Cancel</Button>
+            </ButtonDiv>
+          </BottomDiv>
         </ShowDiv>
       </Form>
     </CreateNoteDiv>
