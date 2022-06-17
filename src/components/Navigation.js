@@ -206,7 +206,14 @@ const Navigation = () => {
                   <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
                 </DropDownButton>;
       default:
-        return null;
+        return  <>
+                  <DropDownButton active={active}>
+                    <Link to='/login' onClick={handleNavOpen}>Log In</Link>
+                  </DropDownButton>
+                  <DropDownButton active={active}>
+                    <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
+                  </DropDownButton>
+                </>;
     };
   };
 
