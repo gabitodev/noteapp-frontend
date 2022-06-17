@@ -11,6 +11,8 @@ const SideBarDiv = styled.div`
   top: 5rem;
   width: 20%;
   align-self: flex-start;
+  overflow: auto;
+  max-height: 50rem;
   @media (min-width: 640px) {
     display: block;
   }
@@ -28,6 +30,7 @@ const SideBarButton = styled.button`
   padding: 0.5rem;
   border-radius: 0.5rem;
   background-color: ${props => props.id === props.activeButton ? '#fbbf24' : 'transparent'};
+  word-break: break-all;
   transition: all 0.1s ease-out;
 `;
 

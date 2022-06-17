@@ -29,7 +29,6 @@ const NoteTitle = styled.h3`
 `;
 
 const ButtonDiv = styled.div`
-  width: 100%;
   background-color: #374151;
   gap: 1rem;
   display: flex;
@@ -48,6 +47,7 @@ const BottomDiv = styled.div`
 const P = styled.p`
   white-space: pre-wrap;
   word-wrap: break-word;
+  word-break: break-word;
 `;
 
 const Button = styled.button`
@@ -85,7 +85,7 @@ const Note = ({ note }) => {
         <NoteTitle>{note.title}</NoteTitle>
         <P>{note.content}</P>
         <BottomDiv>
-          <p>{note.category}</p>
+          <P>{note.category}</P>
           <ButtonDiv>
             <Link to={`${note.id}`}>
               <Button>
