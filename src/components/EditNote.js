@@ -64,7 +64,7 @@ const Form = styled.form`
   }
 `;
 
-const Input = styled.input`
+const TitleInput = styled.input`
   color: white;
   background-color: #374151;
   font-weight: 700;
@@ -73,7 +73,7 @@ const Input = styled.input`
   outline: none;
 `;
 
-const TextArea = styled.textarea`
+const ConentTextArea = styled.textarea`
   color: white;
   font-weight: 400;
   background-color: #374151;
@@ -173,8 +173,15 @@ const EditNote = () => {
   return (
     <EditDiv>
       <Form onSubmit={(event) => handleEdit(event, note.id)}>
-        <Input type="text" value={title} onChange={({ target }) => setTitle(target.value)} />
-        <TextArea name="content" id="content" onKeyDown={handleKeyDown} cols="10" rows="3" value={content} onChange={({ target }) => setContent(target.value)}></TextArea>
+        <TitleInput type="text" value={title} onChange={({ target }) => setTitle(target.value)} />
+        <ConentTextArea 
+        name="content" 
+        id="content" 
+        onKeyDown={handleKeyDown} 
+        cols="10" 
+        rows="3" 
+        value={content} 
+        onChange={({ target }) => setContent(target.value)} />
         <BottomDiv>
           <CategoryInput type="text" value={category} onChange={({ target }) => setCategory(target.value)}  />
           <ButtonDiv>

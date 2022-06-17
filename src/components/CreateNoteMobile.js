@@ -53,7 +53,7 @@ const Form = styled.form`
   border: 1px solid #fbbf24;
 `;
 
-const Input = styled.input`
+const TitleInput = styled.input`
   color: white;
   background-color: #374151;
   font-weight: 700;
@@ -62,7 +62,7 @@ const Input = styled.input`
   outline: none;
 `;
 
-const TextArea = styled.textarea`
+const ContentTexArea = styled.textarea`
   color: white;
   background-color: #374151;
   white-space: pre-wrap;
@@ -136,16 +136,15 @@ const CreateNoteMobile = () => {
   return (
     <CreateDiv>
       <Form onSubmit={handleCreate}>
-        <Input type="text" value={title} placeholder='Title' onChange={({ target }) => setTitle(target.value)} />
-        <TextArea 
+        <TitleInput type="text" value={title} placeholder='Title' onChange={({ target }) => setTitle(target.value)} />
+        <ContentTexArea 
           onKeyDown={handleKeyDown} 
           name="content" 
           cols="1" 
           rows="4" 
           placeholder='Take a note...' 
           value={content} 
-          onChange={({ target }) => setContent(target.value)}>
-        </TextArea>
+          onChange={({ target }) => setContent(target.value)} />
         <BottomDiv>
           <CategoryInput type="text" placeholder='Category' value={category} onChange={({ target }) => setCategory(target.value)} />
           <button type='submit'>Save</button>

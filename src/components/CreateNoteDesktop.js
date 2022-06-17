@@ -43,7 +43,7 @@ const CreateNoteInput = styled.input`
   outline: none;
 `;
 
-const SecondInput = styled.textarea`
+const ContentTexArea = styled.textarea`
   color: white;
   font-size: 1.125rem;
   line-height: 1.50rem;
@@ -157,7 +157,7 @@ const CreateNoteDesktop = () => {
         placeholder={isCreating ? 'Title' : 'Take a note...'}
         value={title} />
         <ShowDiv isCreating={isCreating}>
-          <SecondInput
+          <ContentTexArea
           type="text" 
           onKeyDown={handleKeyDown}
           cols='1' rows='2'

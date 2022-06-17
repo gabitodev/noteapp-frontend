@@ -20,7 +20,7 @@ const Text = styled.p`
   }
 `;
 
-const Heart = styled.span`
+const HeartIcon = styled.span`
   color: #818cf8;
 `;
 
@@ -38,7 +38,7 @@ const Footer = () => {
 
   return (
     <Container changeBackground={changeBackground}>
-      <Text>Made with <Heart>❤</Heart> by Gabriel Garcia</Text>
+      <Text>Made with <HeartIcon>❤</HeartIcon> by Gabriel Garcia</Text>
     </Container>
   );
 }
