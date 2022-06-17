@@ -60,15 +60,16 @@ const Notes = () => {
   const axiosPrivate = useAxiosPrivate();
   const [click, setClick] = useState(false);
   const [windowWidth, setWindowWidt] = useState(0);
-  const { filteredNotes } = useFilter();
+  const { filteredNotes, setFilteredNotes } = useFilter();
 
   useEffect(() => {
     const getNotes = async () => {
       const { data: fetchNotes } = await axiosPrivate.get();
       setNotes(fetchNotes);
+      setFilteredNotes([])
     }
     getNotes();
-  }, [axiosPrivate, setNotes]);
+  }, [axiosPrivate, setNotes, setFilteredNotes]);
 
   useEffect(() => {
     const updateWidth = () => {

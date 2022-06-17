@@ -1,9 +1,13 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import logoutService from '../services/logout';
 import useNotification from '../hooks/useNotification';
+import useFilter from '../hooks/useFilter';
+import useNotes from '../hooks/useNotes';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faNoteSticky, faTag, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
   display: flex;
@@ -83,18 +87,19 @@ const HamburgerIcon = styled.button`
 const DropDownMenu = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  overflow: auto;
+  align-items: flex-start;
   justify-content: flex-start;
   position: fixed;
   background-color: #111827;
   padding-top: 4rem;
   color: ${props => props.navOpen ? 'white' : '#111827'};
   top: 0;
-  right: ${props => props.navOpen ? '0' : '-6rem'};
+  right: ${props => props.navOpen ? '0' : '-50%'};
   height: 100%;
-  width: ${props => props.navOpen ? '50%' : '0'};
+  width: 50%;
   z-index: 2;
-  transition: all 0.3s ease-out;
+  transition: all 0.4s ease-out;
   @media (min-width: 640px) {
     display: none;
   }
@@ -105,18 +110,51 @@ const Svg = styled.svg`
   height: 2rem;
 `;
 
-const DropDownLink = styled.div`
+const DropDownButton = styled.button`
   padding: 1rem;
+  width: 100%;
+  text-align: start;
+  background-color: ${props => props.id === props.active ? '#fbbf24' : 'transparent'};
+  color: ${props => props.id === props.active ? '#1f2937' : 'white'};
 `;
 
 const Navigation = () => {
   const [navOpen, setNavOpen] = useState(false);
   const { auth, setAuth } = useAuth();
   const { setNotification } = useNotification();
+  const [ categories, setCategories ] = useState([]);
+  const { filteredNotes, setFilteredNotes } = useFilter();
+  const { notes } = useNotes();
   const { pathname } = useLocation();
+  const [active, setActive] = useState('1');
   const navigate = useNavigate();
 
   const handleNavOpen = () => {
+    setNavOpen(!navOpen);
+  }
+
+  useEffect(() => {
+    const categories = notes.map(note => note.category);
+    const noDuplicates =[...new Set(categories)]
+    setCategories(noDuplicates);
+  }, [notes]);
+
+  useEffect(() => {
+    if (filteredNotes.lenght === 0) {
+      setActive('1');
+    }
+  }, [filteredNotes]);
+
+  const filterNotes = (event) => {
+    if (event.target.id === '1') {
+      setActive(event.target.id);
+      setFilteredNotes([]);
+      setNavOpen(!navOpen);
+    }
+
+    setActive(event.target.id);
+    const filteredNotes = (notes.filter(note => note.category === event.target.id));
+    setFilteredNotes(filteredNotes);
     setNavOpen(!navOpen);
   }
 
@@ -134,13 +172,13 @@ const Navigation = () => {
   const renderDropDown = (pathname) => {
     switch (pathname) {
       case '/signup':
-        return  <DropDownLink>
+        return  <DropDownButton active={active}>
                   <Link to='/login' onClick={handleNavOpen}>Log In</Link>
-                </DropDownLink>
+                </DropDownButton>;
       case '/login':
-        return <DropDownLink>
-                <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
-              </DropDownLink>
+        return  <DropDownButton active={active}>
+                  <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
+                </DropDownButton>;
       default:
         return null;
     };
@@ -196,9 +234,21 @@ const Navigation = () => {
       </Container>
       {auth.username
         ? <DropDownMenu navOpen={navOpen}>
-            <DropDownLink>
-              <Link to='/' onClick={handleLogout}>Sign Out</Link>
-            </DropDownLink>
+            <DropDownButton active={active} id='1' onClick={filterNotes}>
+              <FontAwesomeIcon icon={faNoteSticky}/> All Notes
+            </DropDownButton>
+            {categories.map(category => {
+              return (
+                <DropDownButton active={active} key={category} id={category} onClick={filterNotes}>
+                  <FontAwesomeIcon icon={faTag}/> {category}
+                </DropDownButton>
+              );
+            })}
+            <DropDownButton active={active} id='signout'>
+              <Link to='/' onClick={handleLogout}>
+                <FontAwesomeIcon icon={faRightFromBracket}/> Sign Out
+              </Link>
+            </DropDownButton>
           </DropDownMenu>
         : <DropDownMenu navOpen={navOpen}>
             {renderDropDown(pathname)}
