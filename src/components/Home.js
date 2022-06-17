@@ -85,11 +85,11 @@ const Home = () => {
       <Title>Meet NoteDEV</Title>
       <SubTitle>A web app to store all your notes</SubTitle>
       <ButtonDiv>
-        <Link to='/signin'>
-          <SignInButton>Sign In</SignInButton>
+        <Link to='/login'>
+          <SignInButton>Log In</SignInButton>
         </Link>
         <Link to='/signup'>
-          <SignUpButton>Register</SignUpButton>
+          <SignUpButton>Sign Up</SignUpButton>
         </Link>
       </ButtonDiv>
     </Container>

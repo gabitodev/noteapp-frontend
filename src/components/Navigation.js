@@ -30,7 +30,7 @@ const Nav = styled.nav`
   z-index: 2;
 `;
 
-const SignInButton = styled.button`
+const LoginButton = styled.button`
   color: #fbbf24;
   font-size: 1.25rem;
   line-height: 1.75rem;
@@ -45,7 +45,7 @@ const SignInButton = styled.button`
   }
 `; // font-size xl
 
-const SignUpButton = styled(SignInButton)`
+const SignUpButton = styled(LoginButton)`
   color: #818cf8;
   border: 2px solid #818cf8;
   &:hover {
@@ -118,17 +118,17 @@ const Navigation = () => {
   const renderNavLinks = (pathname) => {
     switch (pathname) {
       case '/signup':
-        return  <Link to='/signin'><SignInButton>Sign In</SignInButton></Link>;
-      case '/signin':
-        return <Link to='/signup'><SignUpButton>Register</SignUpButton></Link>;
+        return  <Link to='/login'><LoginButton>Log In</LoginButton></Link>;
+      case '/login':
+        return <Link to='/signup'><SignUpButton>Sign Up</SignUpButton></Link>;
       default:
         return  <>
-                  <Link to='/signin'>
-                    <SignInButton>Sign In</SignInButton>
+                  {/* <Link to='/login'>
+                    <LoginButton>Log In</LoginButton>
                   </Link>
                   <Link to='/signup'>
-                    <SignUpButton>Register</SignUpButton>
-                  </Link>
+                    <SignUpButton>Sign Up</SignUpButton>
+                  </Link> */}
                 </>;
     };
   };
@@ -136,13 +136,13 @@ const Navigation = () => {
   const renderDropDown = (pathname) => {
     switch (pathname) {
       case '/signup':
-        return  <Link to='/signin' onClick={handleNavOpen}>Sign In</Link>;
+        return  <Link to='/login' onClick={handleNavOpen}>Log In</Link>;
       case '/signin':
         return <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>;
       default:
         return <>
-                  <Link to='/signin' onClick={handleNavOpen}>Sign In</Link>
-                  <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
+                  {/* <Link to='/login' onClick={handleNavOpen}>Log In</Link>
+                  <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link> */}
                 </>
     };
   };
@@ -176,7 +176,7 @@ const Navigation = () => {
         }
           {auth.username
             ? <NavLinks>
-                  <SignInButton onClick={handleLogout}>Logout</SignInButton>
+                  <LoginButton onClick={handleLogout}>Sign Out</LoginButton>
               </NavLinks>
             : <NavLinks>
                 {renderNavLinks(pathname)}
@@ -197,7 +197,7 @@ const Navigation = () => {
       </Container>
       {auth.username
         ? <DropDownMenu navOpen={navOpen}>
-            <Link to='/home' onClick={handleLogout}>Logout</Link>
+            <Link to='/home' onClick={handleLogout}>Sign Out</Link>
           </DropDownMenu>
         : <DropDownMenu navOpen={navOpen}>
             {renderDropDown(pathname)}

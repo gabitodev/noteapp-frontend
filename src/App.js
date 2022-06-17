@@ -18,7 +18,7 @@ const App = () => {
       <Notification />
       <Routes>
         <Route path='/signup' element={<SignUp />}/>
-        <Route path='/signin' element={<Login />} />
+        <Route path='/login' element={<Login />} />
 
         <Route element={<PersistLogin />}>
           <Route element={<RequireAuth home={true} />}>
