@@ -69,11 +69,15 @@ const SideBar = () => {
         <FontAwesomeIcon icon={faNoteSticky}/> All notes
       </SideBarButton>
       {categories.map(category => {
-        return (
-          <SideBarButton key={category} activeButton={activeButton} id={category} onClick={filterNotes}>
-            <FontAwesomeIcon icon={faTag}/> {category}
-          </SideBarButton>
-        );
+        if (category === '') {
+          return null
+        } else {
+          return (
+            <SideBarButton key={category} activeButton={activeButton} id={category} onClick={filterNotes}>
+              <FontAwesomeIcon icon={faTag}/> {category}
+            </SideBarButton>
+          );
+        }
       })}
     </SideBarDiv>
   );

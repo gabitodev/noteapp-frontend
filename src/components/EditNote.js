@@ -183,7 +183,7 @@ const EditNote = () => {
         value={content} 
         onChange={({ target }) => setContent(target.value)} />
         <BottomDiv>
-          <CategoryInput type="text" value={category} onChange={({ target }) => setCategory(target.value)}  />
+          <CategoryInput type="text" value={category} placeholder='Category' onChange={({ target }) => setCategory(target.value)}  />
           <ButtonDiv>
             <Button type='submit'>Save</Button>
             <Button type='button' onClick={handleCancel}>Cancel</Button>

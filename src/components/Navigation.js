@@ -248,11 +248,15 @@ const Navigation = () => {
               <FontAwesomeIcon icon={faNoteSticky}/> All Notes
             </DropDownButton>
             {categories.map(category => {
-              return (
-                <DropDownButton active={active} key={category} id={category} onClick={filterNotes}>
-                  <FontAwesomeIcon icon={faTag}/> {category}
-                </DropDownButton>
-              );
+                if (category === '') {
+                  return null
+                } else {
+                  return (
+                  <DropDownButton active={active} key={category} id={category} onClick={filterNotes}>
+                      <FontAwesomeIcon icon={faTag}/> {category}
+                  </DropDownButton>
+                  );
+                }
             })}
             <DropDownButton active={active} id='signout'>
               <Link to='/' onClick={handleLogout}>
