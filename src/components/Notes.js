@@ -103,8 +103,9 @@ const Notes = () => {
   // Notes Layout
   const breakpointColumnsObj = {
     default: 4,
-    1024: 3,
-    768: 3,
+    1440: 3,
+    1024: 2,
+    768: 2,
     640: 1
   };
 

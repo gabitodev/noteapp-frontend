@@ -10,12 +10,16 @@ const SideBarDiv = styled.div`
   position: sticky;
   display: none;
   top: 5rem;
-  width: 20%;
+  width: 30%;
   align-self: flex-start;
   overflow: auto;
-  max-height: 50rem;
+  max-height: calc(100vh - 10rem);
   @media (min-width: 640px) {
     display: block;
+  }
+  @media (min-width: 1024px) {
+    display: block;
+    width: 25%;
   }
 `;
 
