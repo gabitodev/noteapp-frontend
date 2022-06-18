@@ -60,6 +60,11 @@ const Button = styled.button`
   }
 `;
 
+const CategoryText = styled(P)`
+  color: #818cf8;
+  font-weight: 700;
+`;
+
 const Note = ({ note }) => {
   // Hooks
   const axiosPrivate = useAxiosPrivate();
@@ -88,7 +93,7 @@ const Note = ({ note }) => {
       <NoteTitle>{note.title}</NoteTitle>
       <P>{note.content}</P>
       <BottomDiv>
-        <P>{note.category}</P>
+        <CategoryText>{note.category}</CategoryText>
         <ButtonDiv>
           <Link to={`${note.id}`}>
             <Button>
