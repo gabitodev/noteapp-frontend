@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
+// Styles
 const NoteContainer = styled.div`
   background-color: #374151;
   position: static;
@@ -60,10 +61,12 @@ const Button = styled.button`
 `;
 
 const Note = ({ note }) => {
+  // Hooks
   const axiosPrivate = useAxiosPrivate();
   const { notes, setNotes } = useNotes();
   const { setNotification } = useNotification();
 
+  // Handlers
   const deleteNote = async (id) => {
     try {
       await axiosPrivate.delete(id);
@@ -79,26 +82,25 @@ const Note = ({ note }) => {
     }
   }
 
+  // Components
   return (
-    <>
-      <NoteContainer>
-        <NoteTitle>{note.title}</NoteTitle>
-        <P>{note.content}</P>
-        <BottomDiv>
-          <P>{note.category}</P>
-          <ButtonDiv>
-            <Link to={`${note.id}`}>
-              <Button>
-                <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faPenToSquare}/>
-              </Button>
-            </Link>
-            <Button onClick={() => deleteNote(note.id)}>
-              <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faTrash}/>
+    <NoteContainer>
+      <NoteTitle>{note.title}</NoteTitle>
+      <P>{note.content}</P>
+      <BottomDiv>
+        <P>{note.category}</P>
+        <ButtonDiv>
+          <Link to={`${note.id}`}>
+            <Button>
+              <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faPenToSquare}/>
             </Button>
-          </ButtonDiv>
-        </BottomDiv>
-      </NoteContainer>
-    </>
+          </Link>
+          <Button onClick={() => deleteNote(note.id)}>
+            <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faTrash}/>
+          </Button>
+        </ButtonDiv>
+      </BottomDiv>
+    </NoteContainer>
   );
 };
 

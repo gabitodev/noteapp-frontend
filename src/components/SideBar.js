@@ -36,10 +36,13 @@ const SideBarButton = styled.button`
 `;
 
 const SideBar = () => {
+  // States
+  const [activeButton, setActiveButton] = useState('1');
+  const [categories, setCategories] = useState([]);
+
+  // Hooks
   const { notes } = useNotes();
   const { setFilteredNotes } = useFilter();
-  const [categories, setCategories] = useState([]);
-  const [activeButton, setActiveButton] = useState('1');
 
   useEffect(() => {
     const categories = notes.map(note => note.category);
@@ -47,6 +50,7 @@ const SideBar = () => {
     setCategories(noDuplicates);
   }, [notes]);
 
+  // Handlers
   const filterNotes = (event) => {
     if (event.target.id === '1') {
       setActiveButton(event.target.id);
@@ -58,6 +62,7 @@ const SideBar = () => {
     setFilteredNotes(filteredNotes);
   }
 
+  // Component
   return (
     <SideBarDiv>
       <SideBarButton activeButton={activeButton} id='1' onClick={filterNotes}>

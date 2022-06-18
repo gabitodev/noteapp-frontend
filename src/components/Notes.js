@@ -12,6 +12,7 @@ import { Outlet } from 'react-router-dom';
 import Masonry from 'react-masonry-css';
 import useFilter from '../hooks/useFilter';
 
+// Styles
 const Container = styled.div`
   height: 100%;
   position: relative;
@@ -56,10 +57,13 @@ const CreateButton = styled.button`
 `;
 
 const Notes = () => {
+  // States
+  const [windowWidth, setWindowWidt] = useState(0);
+  const [click, setClick] = useState(false);
+
+  // Hooks
   const { notes, setNotes } = useNotes();
   const axiosPrivate = useAxiosPrivate();
-  const [click, setClick] = useState(false);
-  const [windowWidth, setWindowWidt] = useState(0);
   const { filteredNotes, setFilteredNotes } = useFilter();
 
   useEffect(() => {
@@ -91,10 +95,12 @@ const Notes = () => {
     }
   }, [windowWidth]);
 
+  // Handlers
   const handleCreate = () => {
     setClick(!click);
   }
   
+  // Notes Layout
   const breakpointColumnsObj = {
     default: 4,
     1024: 3,
@@ -102,8 +108,9 @@ const Notes = () => {
     640: 1
   };
 
+  // Component
   return (
-   <Section>
+  <Section>
     <SideBar />
     <Container>
       <CreateNoteDesktop />
@@ -115,8 +122,7 @@ const Notes = () => {
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-      >
+        columnClassName="my-masonry-grid_column">
         {filteredNotes.length === 0
           ? notes.map(note =>
               <div key={note.id}>

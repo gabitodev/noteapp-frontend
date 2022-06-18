@@ -4,6 +4,7 @@ import useRefreshToken from '../hooks/useRefreshToken';
 import useAuth from '../hooks/useAuth';
 import styled from 'styled-components';
 
+// Styles
 const Container = styled.div`
   min-height: calc(100% - 4rem);
   display: flex;
@@ -19,7 +20,10 @@ const Container = styled.div`
 `;
 
 const PersistLogin = () => {
+  // States
   const [isLoading, setIsloading] = useState(true);
+
+  // Hooks
   const refresh = useRefreshToken();
   const { auth, persist } = useAuth();
   const accessToken = !auth?.accessToken;
@@ -37,6 +41,7 @@ const PersistLogin = () => {
     accessToken ? verifyRefreshToken() : setIsloading(false);
   }, [accessToken, refresh]);
 
+  // Component
   return (
     <>
       {!persist

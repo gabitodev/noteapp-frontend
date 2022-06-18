@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
+// Styles
 const Container = styled.div`
   min-height: calc(100vh - 8rem);
   max-width: 80rem;
@@ -25,7 +26,7 @@ const Title = styled.h1`
   @media (min-width: 640px) {
     font-size: 4.5rem;
   }
-`; // 2xl
+`;
 
 const SubTitle = styled.h3`
   color: white;

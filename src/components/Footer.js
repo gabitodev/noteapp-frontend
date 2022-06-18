@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
+// Styles
 const Container = styled.footer`
   display: flex;
   background-color: ${props => props.changeBackground ? '#1f2937' : 'transparent'};
@@ -25,8 +26,11 @@ const HeartIcon = styled.span`
 `;
 
 const Footer = () => {
-  const { pathname } = useLocation();
+  // States
   const [changeBackground, setChangeBackground] = useState(false);
+  
+  // Hooks
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (pathname !== '/') {
@@ -36,6 +40,7 @@ const Footer = () => {
     }
   }, [pathname]);
 
+  // Component
   return (
     <Container changeBackground={changeBackground}>
       <Text>Made with <HeartIcon>❤</HeartIcon> by Gabriel Garcia</Text>

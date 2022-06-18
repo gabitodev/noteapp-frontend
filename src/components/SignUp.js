@@ -6,6 +6,7 @@ import useNotification from '../hooks/useNotification';
 import usersService from '../services/users';
 import { useNavigate } from 'react-router-dom';
 
+// Styles
 const Section = styled.section`
   min-height: calc(100vh - 8rem);
   background-color: #1f2937;
@@ -140,15 +141,13 @@ const FormTitle = styled.h3`
   font-weight: 700;
 `;
 
+// Validations
 const USERNAME_REGEX = /^[a-zA-Z][a-za-z0-9-_]{6,16}$/;
 const NAME_REGEX = /^[a-zA-Z][ a-zA-Z]{6,16}$/;
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[0-9])(?=.*[ `!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?~]).{6,24}$/;
 
 const SignUp = () => {
-  const userRef = useRef();
-  const navigate = useNavigate();
-  const { setNotification } = useNotification();
-
+  // States
   const [username, setUsername] = useState('');
   const [validUsername, setValidUsername] = useState(false);
   const [usernameFocus, setUsernameFocus] = useState(false);
@@ -165,8 +164,13 @@ const SignUp = () => {
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false);
 
+  // Hooks
+  const usernameRef = useRef();
+  const navigate = useNavigate();
+  const { setNotification } = useNotification();
+
   useEffect(() => {
-    userRef.current.focus();
+    usernameRef.current.focus();
   }, []);
 
   useEffect(() => {
@@ -186,6 +190,7 @@ const SignUp = () => {
     setValidMatch(match);
   }, [password, matchPassword]);
 
+  // Handlers
   const handleSignUp = async (event) => {
     event.preventDefault();
     const newUser = {
@@ -214,6 +219,7 @@ const SignUp = () => {
     }
   };
 
+  // Component
   return (
     <Section>
       <Container>
@@ -232,7 +238,7 @@ const SignUp = () => {
             <Input
               type='text'
               id='username'
-              ref={userRef}
+              ref={usernameRef}
               autoComplete='off'
               required
               onChange={({ target }) => setUsername(target.value)}

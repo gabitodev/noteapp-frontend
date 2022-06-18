@@ -139,17 +139,25 @@ const CheckInput = styled.input`
 `;
 
 const Login= () => {
+  // States
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
+  // Hooks
   const userRef = useRef();
   const { setAuth, persist, setPersist } = useAuth();
   const navigate = useNavigate();
   const { setNotification } = useNotification();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
   useEffect(() => {
     userRef.current.focus();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem('persist', persist);
+  }, [persist]);
+
+  // Handlers
   const handleSignIn = async (event) => {
     event.preventDefault();
     try {
@@ -175,11 +183,8 @@ const Login= () => {
   const togglePersist = () => {
     setPersist(!persist);
   };
-
-  useEffect(() => {
-    localStorage.setItem('persist', persist);
-  }, [persist]);
   
+  // Component
   return (
     <Section>
       <Container>

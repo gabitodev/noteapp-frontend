@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import useNotification from '../hooks/useNotification';
 
+// Styles
 const NotificationDiv = styled.div`
   position: absolute;
   top: 2em;
@@ -36,9 +37,12 @@ const Text = styled.div`
 `;
 
 const Notification = () => {
+  // Hooks
   const { notification } = useNotification();
+
   if (!notification) return null;
 
+  // Component
   return (
     <NotificationDiv>
       <Text isError={notification.isError}>{notification.message}</Text>
