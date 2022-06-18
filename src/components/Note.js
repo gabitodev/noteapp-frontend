@@ -31,7 +31,7 @@ const NoteTitle = styled.h3`
 
 const ButtonDiv = styled.div`
   background-color: #374151;
-  gap: 1rem;
+  gap: 0.5rem;
   display: flex;
   justify-content: flex-end;
   align-items: center;
