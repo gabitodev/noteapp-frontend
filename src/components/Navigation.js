@@ -107,6 +107,16 @@ const DropDownMenu = styled.div`
   }
 `;
 
+const DropDownLink = styled(Link)`
+  padding: 1rem;
+  width: 100%;
+  text-align: start;
+  font-weight: 700;
+  background-color: ${props => props.id === props.active ? '#fbbf24' : 'transparent'};
+  color: ${props => props.id === props.active ? '#1f2937' : 'white'};
+  word-break: break-all;
+`;
+
 const DropDownButton = styled.button`
   padding: 1rem;
   width: 100%;
@@ -199,21 +209,13 @@ const Navigation = () => {
   const renderDropDownLinks = (pathname) => {
     switch (pathname) {
     case '/signup':
-      return  <DropDownButton active={active}>
-        <Link to='/login' onClick={handleNavOpen}>Log In</Link>
-      </DropDownButton>;
+      return  <DropDownLink active={active} to='/login' onClick={handleNavOpen}>Log In</DropDownLink>;
     case '/login':
-      return  <DropDownButton active={active}>
-        <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
-      </DropDownButton>;
+      return  <DropDownLink active={active} to='/signup' onClick={handleNavOpen}>Sign Up</DropDownLink>;
     default:
       return  <>
-        <DropDownButton active={active}>
-          <Link to='/login' onClick={handleNavOpen}>Log In</Link>
-        </DropDownButton>
-        <DropDownButton active={active}>
-          <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
-        </DropDownButton>
+        <DropDownLink active={active} to='/login' onClick={handleNavOpen}>Log In</DropDownLink>;
+        <DropDownLink active={active} to='/signup' onClick={handleNavOpen}>Sign Up</DropDownLink>;
       </>;
     }
   };
@@ -259,11 +261,9 @@ const Navigation = () => {
               );
             }
           })}
-          <DropDownButton active={active} id='signout'>
-            <Link to='/' onClick={handleLogout}>
-              <FontAwesomeIcon icon={faRightFromBracket}/> Sign Out
-            </Link>
-          </DropDownButton>
+          <DropDownLink active={active} id='signout' to='/' onClick={handleLogout}>
+            <FontAwesomeIcon icon={faRightFromBracket}/> Sign Out
+          </DropDownLink>
         </DropDownMenu>
         : <DropDownMenu isNavOpen={isNavOpen}>
           {renderDropDownLinks(pathname)}
