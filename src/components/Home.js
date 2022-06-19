@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 // Styles
 const Container = styled.div`
-  min-height: calc(100% - 8rem);
+  min-height: calc(100vh - 8rem);
   max-width: 80rem;
   display: flex;
   flex-direction: column;

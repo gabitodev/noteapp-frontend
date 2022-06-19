@@ -29,6 +29,7 @@ html {
   -webkit-text-size-adjust: 100%; /* 2 */
   -moz-tab-size: 4; /* 3 */
   tab-size: 4; /* 3 */
+  height: -webkit-fill-available;
   font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"); /* 4 */
 }
 
@@ -41,7 +42,6 @@ body {
   margin: 0; /* 1 */
   line-height: inherit; /* 2 */
   font-family: 'Lato', sans-serif;
-  height: -webkit-fill-available;
   width: 100%;
   min-height: 100vh;
   background-color: #1f2937;
