@@ -97,11 +97,11 @@ const Note = ({ note }) => {
         <ButtonDiv>
           <Link to={`${note.id}`}>
             <Button>
-              <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faPenToSquare}/>
+              <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faPenToSquare} title='Edit' />
             </Button>
           </Link>
           <Button onClick={() => deleteNote(note.id)}>
-            <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faTrash}/>
+            <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faTrash} title='Delete'/>
           </Button>
         </ButtonDiv>
       </BottomDiv>

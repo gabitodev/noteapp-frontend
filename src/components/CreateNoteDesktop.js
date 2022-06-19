@@ -92,7 +92,8 @@ const Button = styled.button`
 const CategoryInput = styled.input`
   font-size: 1.125rem;
   line-height: 1.50rem;
-  font-weight: 400;
+  font-weight: 700;
+  color: #818cf8;
   background-color: #374151;
   outline: none;
 `;
@@ -145,6 +146,13 @@ const CreateNoteDesktop = () => {
     };
   };
 
+  const handleCancel = () => {
+    setTitle('');
+    setContent('');
+    setCategory('');
+    setIsCreating(false);
+  };
+
   // Component
   return (
     <CreateNoteDiv>
@@ -168,7 +176,7 @@ const CreateNoteDesktop = () => {
             <CategoryInput type="text" placeholder='Category' value={category} onChange={({ target }) => setCategory(target.value)} />
             <ButtonDiv>
               <Button type='submit'>Save</Button>
-              <Button type='button' onClick={() => setIsCreating(false)}>Cancel</Button>
+              <Button type='button' onClick={handleCancel}>Cancel</Button>
             </ButtonDiv>
           </BottomDiv>
         </ShowDiv>

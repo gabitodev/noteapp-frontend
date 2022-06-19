@@ -81,9 +81,21 @@ const BottomDiv = styled.div `
 `;
 
 const CategoryInput = styled.input`
-  font-weight: 400;
+  font-weight: 700;
+  color: #818cf8;
   background-color: #374151;
   outline: none;
+`;
+
+const SaveButton = styled.button`
+  font-weight: 700;
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  @media (hover: none) and (pointer: coarse) {
+    &:active {
+      background-color: #4b5563;
+    }
+  }
 `;
 
 const CreateNoteMobile = () => {
@@ -147,7 +159,7 @@ const CreateNoteMobile = () => {
           onChange={({ target }) => setContent(target.value)} />
         <BottomDiv>
           <CategoryInput type="text" placeholder='Category' value={category} onChange={({ target }) => setCategory(target.value)} />
-          <button type='submit'>Save</button>
+          <SaveButton type='submit'>Save</SaveButton>
         </BottomDiv>
       </Form>
     </CreateDiv>

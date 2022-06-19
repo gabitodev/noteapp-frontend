@@ -99,6 +99,7 @@ const ButtonDiv = styled.div`
 const Button = styled.button`
   border-radius: 0.5rem;
   padding: 0.4rem 0.8rem;
+  font-weight: 700;
   transition: all 0.3s ease-in-out;
   &:hover {
     background-color: #4b5563;
@@ -106,9 +107,10 @@ const Button = styled.button`
 `;
 
 const CategoryInput = styled.input`
-  font-weight: 400;
   background-color: #374151;
   outline: none;
+  color: #818cf8;
+  font-weight: 700;
   width: 35%;
   @media (min-width: 640px) {
     width: 50%;
