@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 // Styles
 const Container = styled.div`
-  min-height: calc(100% - 4rem);
+  min-height: calc(100vh - 8rem);
   display: flex;
   flex-direction: column;
   align-items: center;
