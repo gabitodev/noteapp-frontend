@@ -37,6 +37,9 @@ const SideBarButton = styled.button`
   background-color: ${props => props.id === props.activeButton ? '#fbbf24' : 'transparent'};
   word-break: break-all;
   transition: all 0.1s ease-out;
+  &:hover {
+    color: #9ca3af;
+  }
 `;
 
 const SideBar = () => {
