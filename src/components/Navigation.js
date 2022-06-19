@@ -114,6 +114,7 @@ const DropDownButton = styled.button`
   font-weight: 700;
   background-color: ${props => props.id === props.active ? '#fbbf24' : 'transparent'};
   color: ${props => props.id === props.active ? '#1f2937' : 'white'};
+  word-break: break-all;
 `;
 
 const Navigation = () => {
