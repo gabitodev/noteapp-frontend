@@ -209,7 +209,7 @@ const SignUp = () => {
       setName('');
       setPassword('');
       setMatchPassword('');
-      navigate('/signin');
+      navigate('/login');
     } catch (error) {
       setNotification({
         message: error.response.data.error,
