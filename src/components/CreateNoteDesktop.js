@@ -82,10 +82,13 @@ const Button = styled.button`
   font-size: 1.125rem;
   line-height: 1.50rem;
   font-weight: 700;
-  padding: 0.4rem 0.8rem;
+  padding: 0.4rem 0.4rem;
   transition: all 0.3s ease-in-out;
   &:hover {
     background-color: #4b5563;
+  }
+  @media (min-width: 1024px) {
+    padding: 0.4rem 0.8rem;
   }
 `;
 
@@ -96,6 +99,7 @@ const CategoryInput = styled.input`
   color: #818cf8;
   background-color: #374151;
   outline: none;
+  width: 50%;
 `;
 
 const CreateNoteDesktop = () => {
