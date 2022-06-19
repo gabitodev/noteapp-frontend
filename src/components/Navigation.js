@@ -209,13 +209,13 @@ const Navigation = () => {
   const renderDropDownLinks = (pathname) => {
     switch (pathname) {
     case '/signup':
-      return  <DropDownLink active={active} to='/login' onClick={handleNavOpen}>Log In</DropDownLink>;
+      return <DropDownLink active={active} to='/login' onClick={handleNavOpen}>Log In</DropDownLink>;
     case '/login':
-      return  <DropDownLink active={active} to='/signup' onClick={handleNavOpen}>Sign Up</DropDownLink>;
+      return <DropDownLink active={active} to='/signup' onClick={handleNavOpen}>Sign Up</DropDownLink>;
     default:
       return  <>
-        <DropDownLink active={active} to='/login' onClick={handleNavOpen}>Log In</DropDownLink>;
-        <DropDownLink active={active} to='/signup' onClick={handleNavOpen}>Sign Up</DropDownLink>;
+        <DropDownLink active={active} to='/login' onClick={handleNavOpen}>Log In</DropDownLink>
+        <DropDownLink active={active} to='/signup' onClick={handleNavOpen}>Sign Up</DropDownLink>
       </>;
     }
   };
