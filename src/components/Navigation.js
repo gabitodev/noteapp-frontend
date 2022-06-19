@@ -172,6 +172,7 @@ const Navigation = () => {
       handleNavOpen();
       setAuth({});
       navigate('/');
+      localStorage.removeItem('persist');
       setNotification({
         message: 'Successfully logged out 👍',
         isError: false

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { keyframes } from 'styled-components';
 import styled from 'styled-components';
 import useNotes from '../hooks/useNotes';
@@ -128,10 +128,17 @@ const EditNote = () => {
   // Note to edit
   const note = notes.find(note => note.id === id);
 
+  // UseEffect
+  useEffect(() => {
+    if (!note) {
+      navigate('/notes');
+    }
+  }, []);
+
   // States
-  const [title, setTitle] = useState(note.title);
-  const [content, setContent] = useState(note.content);
-  const [category, setCategory] = useState(note.category);
+  const [title, setTitle] = useState(note?.title);
+  const [content, setContent] = useState(note?.content);
+  const [category, setCategory] = useState(note?.category);
 
   // Handlers
   const handleEdit = async (event, id) => {

@@ -57,6 +57,11 @@ const SideBar = () => {
     setCategories(noDuplicates);
   }, [notes]);
 
+  useEffect(() => {
+    const filteredNotes = (notes.filter(note => note.category === activeButton));
+    setFilteredNotes(filteredNotes);
+  }, [notes]);
+
   // Handlers
   const filterNotes = (event) => {
     if (event.target.id === '1') {
