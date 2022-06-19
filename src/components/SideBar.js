@@ -38,7 +38,7 @@ const SideBarButton = styled.button`
   word-break: break-all;
   transition: all 0.1s ease-out;
   &:hover {
-    color: #9ca3af;
+    color: ${props => props.id === props.activeButton ? '#white' : '#9ca3af'};
   }
 `;
 
