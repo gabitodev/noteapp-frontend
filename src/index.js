@@ -6,6 +6,11 @@ import { AuthProvider } from './context/AuthProvider';
 import { NotificationProvider } from './context/NotificationProvider';
 import { NotesProvider } from './context/NotesProvider';
 import { FilterProvider } from './context/FilterProvider';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+
+if (process.env.NODE_ENV === 'production') {
+  disableReactDevTools();
+};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
