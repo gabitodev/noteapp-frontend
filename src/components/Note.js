@@ -96,12 +96,12 @@ const Note = ({ note }) => {
         <CategoryText>{note.category}</CategoryText>
         <ButtonDiv>
           <Link to={`${note.id}`}>
-            <Button>
-              <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faPenToSquare} title='Edit' />
+            <Button title='Edit'>
+              <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faPenToSquare}/>
             </Button>
           </Link>
-          <Button onClick={() => deleteNote(note.id)}>
-            <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faTrash} title='Delete'/>
+          <Button onClick={() => deleteNote(note.id)} title='Delete'>
+            <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faTrash}/>
           </Button>
         </ButtonDiv>
       </BottomDiv>
