@@ -43,7 +43,7 @@ body {
   font-family: 'Lato', sans-serif;
   height: -webkit-fill-available;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background-color: #1f2937;
   /* background-image:
     linear-gradient(to bottom, rgba(0, 0, 0, 0.438), rgba(0, 0, 0, 0.644)),
@@ -54,6 +54,7 @@ body {
 }
 
 #root {
+  width: 100%;
   height: 100%;
   position: relative;
 }
