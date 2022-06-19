@@ -85,29 +85,29 @@ const SubmitButton = styled.button`
   }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      ${ props => props.disabled 
-        ? 'none' 
-        : `color: #1f2937;
+      ${ props => props.disabled
+    ? 'none'
+    : `color: #1f2937;
           background-color: #fbbf24;`
-      }
+}
     }
     &:active {
-      ${ props => props.disabled 
-        ? 'none' 
-        : `transition: none;
+      ${ props => props.disabled
+    ? 'none'
+    : `transition: none;
           outline: 2px solid #f59e0b;
           background-color: #f59e0b;`
-      }
+}
     }
   }
   @media (hover: none) and (pointer: coarse) {
     transition: none;
     &:active {
-      ${ props => props.disabled 
-        ? 'none' 
-        : `background-color: #fbbf24;
+      ${ props => props.disabled
+    ? 'none'
+    : `background-color: #fbbf24;
           color: #171717;`
-      }
+}
     }
   }
 `;
@@ -166,7 +166,7 @@ const Login= () => {
       setNotification({
         message: `${username} logged in 🤩`,
         isError: false,
-      })
+      });
       setTimeout(() => setNotification(null), 3000);
       setUsername('');
       setPassword('');
@@ -183,7 +183,7 @@ const Login= () => {
   const togglePersist = () => {
     setPersist(!persist);
   };
-  
+
   // Component
   return (
     <Section>

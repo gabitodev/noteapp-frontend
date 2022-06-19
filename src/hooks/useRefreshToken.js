@@ -7,10 +7,10 @@ const useRefreshToken = () => {
   const refresh = async () => {
     const response = await refreshService.getRefreshToken();
     setAuth(prev => {
-      return { ...prev, accessToken: response.accessToken, username: response.username }
+      return { ...prev, accessToken: response.accessToken, username: response.username };
     });
     return response.accessToken;
-  }
+  };
 
   return refresh;
 };

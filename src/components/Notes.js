@@ -70,8 +70,8 @@ const Notes = () => {
     const getNotes = async () => {
       const { data: fetchNotes } = await axiosPrivate.get();
       setNotes(fetchNotes);
-      setFilteredNotes([])
-    }
+      setFilteredNotes([]);
+    };
     getNotes();
   }, [axiosPrivate, setNotes, setFilteredNotes]);
 
@@ -81,7 +81,7 @@ const Notes = () => {
     };
 
     window.addEventListener('resize', updateWidth);
-    
+
     return () => window.removeEventListener('resize', updateWidth);
   }, []);
 
@@ -98,8 +98,8 @@ const Notes = () => {
   // Handlers
   const handleCreate = () => {
     setClick(!click);
-  }
-  
+  };
+
   // Notes Layout
   const breakpointColumnsObj = {
     default: 4,
@@ -111,37 +111,37 @@ const Notes = () => {
 
   // Component
   return (
-  <Section>
-    <SideBar />
-    <Container>
-      <CreateNoteDesktop />
-      <Outlet />
-      {click && windowWidth < 640
-        ? <CreateNoteMobile />
-        : null
-      }
-      <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column">
-        {filteredNotes.length === 0
-          ? notes.map(note =>
+    <Section>
+      <SideBar />
+      <Container>
+        <CreateNoteDesktop />
+        <Outlet />
+        {click && windowWidth < 640
+          ? <CreateNoteMobile />
+          : null
+        }
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column">
+          {filteredNotes.length === 0
+            ? notes.map(note =>
               <div key={note.id}>
                 <Note note={note} />
               </div>
             )
-          : filteredNotes.map(note =>
-            <div key={note.id}>
-              <Note note={note} />
-            </div>
+            : filteredNotes.map(note =>
+              <div key={note.id}>
+                <Note note={note} />
+              </div>
             )
-        }
-      </Masonry>
+          }
+        </Masonry>
         <CreateButton onClick={handleCreate} click={click}>
           <FontAwesomeIcon icon={faPlus} />
         </CreateButton>
       </Container>
-   </Section> 
+    </Section>
   );
 };
 

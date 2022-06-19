@@ -113,7 +113,7 @@ const CreateNoteDesktop = () => {
 
   // Handlers
   const handleKeyDown = (e) => {
-    e.target.style.height = "inherit";
+    e.target.style.height = 'inherit';
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
@@ -125,7 +125,7 @@ const CreateNoteDesktop = () => {
       category
     };
     try {
-      const {data: createdNote} = await axiosPrivate.post('/', noteToCreate);
+      const { data: createdNote } = await axiosPrivate.post('/', noteToCreate);
       setNotes(notes.concat(createdNote));
       setTitle('');
       setContent('');
@@ -143,7 +143,7 @@ const CreateNoteDesktop = () => {
         iseError: true,
       });
       setTimeout(() => setNotification(null), 3000);
-    };
+    }
   };
 
   const handleCancel = () => {
@@ -158,20 +158,20 @@ const CreateNoteDesktop = () => {
     <CreateNoteDiv>
       <Form onSubmit={handleCreate}>
         <CreateNoteInput
-        type="text"
-        isCreating={isCreating}
-        onClick={() => setIsCreating(true)}
-        onChange={({ target }) => setTitle(target.value)}
-        placeholder={isCreating ? 'Title' : 'Take a note...'}
-        value={title} />
+          type="text"
+          isCreating={isCreating}
+          onClick={() => setIsCreating(true)}
+          onChange={({ target }) => setTitle(target.value)}
+          placeholder={isCreating ? 'Title' : 'Take a note...'}
+          value={title} />
         <ShowDiv isCreating={isCreating}>
           <ContentTexArea
-          type="text" 
-          onKeyDown={handleKeyDown}
-          cols='1' rows='2'
-          onChange={({ target }) => setContent(target.value)}
-          placeholder='Take a note...'
-          value={content} />
+            type="text"
+            onKeyDown={handleKeyDown}
+            cols='1' rows='2'
+            onChange={({ target }) => setContent(target.value)}
+            placeholder='Take a note...'
+            value={content} />
           <BottomDiv>
             <CategoryInput type="text" placeholder='Category' value={category} onChange={({ target }) => setCategory(target.value)} />
             <ButtonDiv>

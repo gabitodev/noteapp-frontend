@@ -85,7 +85,7 @@ const Note = ({ note }) => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
 
   // Components
   return (
@@ -97,11 +97,11 @@ const Note = ({ note }) => {
         <ButtonDiv>
           <Link to={`${note.id}`}>
             <Button title='Edit'>
-              <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faPenToSquare}/>
+              <FontAwesomeIcon style={{ width: '2rem', color: '#9ca3af' }} icon={faPenToSquare}/>
             </Button>
           </Link>
           <Button onClick={() => deleteNote(note.id)} title='Delete'>
-            <FontAwesomeIcon style={{width: '2rem', color: '#9ca3af'}} icon={faTrash}/>
+            <FontAwesomeIcon style={{ width: '2rem', color: '#9ca3af' }} icon={faTrash}/>
           </Button>
         </ButtonDiv>
       </BottomDiv>

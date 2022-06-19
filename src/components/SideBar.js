@@ -53,7 +53,7 @@ const SideBar = () => {
 
   useEffect(() => {
     const categories = notes.map(note => note.category);
-    const noDuplicates =[...new Set(categories)]
+    const noDuplicates =[...new Set(categories)];
     setCategories(noDuplicates);
   }, [notes]);
 
@@ -67,7 +67,7 @@ const SideBar = () => {
     setActiveButton(event.target.id);
     const filteredNotes = (notes.filter(note => note.category === event.target.id));
     setFilteredNotes(filteredNotes);
-  }
+  };
 
   // Component
   return (
@@ -77,7 +77,7 @@ const SideBar = () => {
       </SideBarButton>
       {categories.map(category => {
         if (category === '') {
-          return null
+          return null;
         } else {
           return (
             <SideBarButton key={category} activeButton={activeButton} id={category} onClick={filterNotes}>

@@ -109,7 +109,7 @@ const CreateNoteMobile = () => {
   const { notes, setNotes } = useNotes();
   const axiosPrivate = useAxiosPrivate();
   const { setNotification } = useNotification();
-  
+
   // Handlers
   const handleCreate = async (event) => {
     event.preventDefault();
@@ -119,7 +119,7 @@ const CreateNoteMobile = () => {
       category
     };
     try {
-      const {data: createdNote} = await axiosPrivate.post('/', noteToCreate);
+      const { data: createdNote } = await axiosPrivate.post('/', noteToCreate);
       setNotes(notes.concat(createdNote));
       setNotification({
         message: `Note '${createdNote.title}' created successfully 👍`,
@@ -136,26 +136,26 @@ const CreateNoteMobile = () => {
         iseError: true,
       });
       setTimeout(() => setNotification(null), 3000);
-    };
+    }
   };
 
   const handleKeyDown = (e) => {
-    e.target.style.height = "inherit";
+    e.target.style.height = 'inherit';
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
-  
+
   // Component
   return (
     <CreateDiv>
       <Form onSubmit={handleCreate}>
         <TitleInput type="text" value={title} placeholder='Title' onChange={({ target }) => setTitle(target.value)} />
-        <ContentTexArea 
-          onKeyDown={handleKeyDown} 
-          name="content" 
-          cols="1" 
-          rows="4" 
-          placeholder='Take a note...' 
-          value={content} 
+        <ContentTexArea
+          onKeyDown={handleKeyDown}
+          name="content"
+          cols="1"
+          rows="4"
+          placeholder='Take a note...'
+          value={content}
           onChange={({ target }) => setContent(target.value)} />
         <BottomDiv>
           <CategoryInput type="text" placeholder='Category' value={category} onChange={({ target }) => setCategory(target.value)} />
@@ -164,5 +164,5 @@ const CreateNoteMobile = () => {
       </Form>
     </CreateDiv>
   );
-}
+};
 export default CreateNoteMobile;

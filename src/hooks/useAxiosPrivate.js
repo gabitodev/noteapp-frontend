@@ -12,7 +12,7 @@ const useAxiosPrivate = () => {
       config => {
         if (!config?.headers['Authorization']) {
           config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
-        };
+        }
         return config;
       }, (error) => Promise.reject(error)
     );
@@ -34,7 +34,7 @@ const useAxiosPrivate = () => {
     return () => {
       axiosPrivate.interceptors.response.eject(responseIntercept);
       axiosPrivate.interceptors.request.eject(requestIntercept);
-    }
+    };
   }, [auth, refresh]);
 
   return axiosPrivate;

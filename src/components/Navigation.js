@@ -133,7 +133,7 @@ const Navigation = () => {
 
   useEffect(() => {
     const categories = notes.map(note => note.category);
-    const categoriesWithoutDuplicates =[...new Set(categories)]
+    const categoriesWithoutDuplicates =[...new Set(categories)];
     setCategories(categoriesWithoutDuplicates);
   }, [notes]);
 
@@ -178,44 +178,44 @@ const Navigation = () => {
 
   const handleNavOpen = () => {
     setIsNavOpen(!isNavOpen);
-  }
+  };
 
   // Renders
   const renderNavLinks = (pathname) => {
     switch (pathname) {
-      case '/signup':
-        return  <Link to='/login'>
-                  <LoginButton>Log In</LoginButton>
-                </Link>;
-      case '/login':
-        return  <Link to='/signup'>
-                  <SignUpButton>Sign Up</SignUpButton>
-                </Link>;
-      default:
-        return null;
-    };
+    case '/signup':
+      return  <Link to='/login'>
+        <LoginButton>Log In</LoginButton>
+      </Link>;
+    case '/login':
+      return  <Link to='/signup'>
+        <SignUpButton>Sign Up</SignUpButton>
+      </Link>;
+    default:
+      return null;
+    }
   };
 
   const renderDropDownLinks = (pathname) => {
     switch (pathname) {
-      case '/signup':
-        return  <DropDownButton active={active}>
-                  <Link to='/login' onClick={handleNavOpen}>Log In</Link>
-                </DropDownButton>;
-      case '/login':
-        return  <DropDownButton active={active}>
-                  <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
-                </DropDownButton>;
-      default:
-        return  <>
-                  <DropDownButton active={active}>
-                    <Link to='/login' onClick={handleNavOpen}>Log In</Link>
-                  </DropDownButton>
-                  <DropDownButton active={active}>
-                    <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
-                  </DropDownButton>
-                </>;
-    };
+    case '/signup':
+      return  <DropDownButton active={active}>
+        <Link to='/login' onClick={handleNavOpen}>Log In</Link>
+      </DropDownButton>;
+    case '/login':
+      return  <DropDownButton active={active}>
+        <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
+      </DropDownButton>;
+    default:
+      return  <>
+        <DropDownButton active={active}>
+          <Link to='/login' onClick={handleNavOpen}>Log In</Link>
+        </DropDownButton>
+        <DropDownButton active={active}>
+          <Link to='/signup' onClick={handleNavOpen}>Sign Up</Link>
+        </DropDownButton>
+      </>;
+    }
   };
 
   // Component
@@ -226,48 +226,48 @@ const Navigation = () => {
           ? <Link to='/notes'><Title>NoteDEV</Title></Link>
           : <Link to='/'><Title>NoteDEV</Title></Link>
         }
-          {auth.username
-            ? <NavLinks>
-                  <LoginButton onClick={handleLogout}>Sign Out</LoginButton>
-              </NavLinks>
-            : <NavLinks>
-                {renderNavLinks(pathname)}
-              </NavLinks>
-          }
+        {auth.username
+          ? <NavLinks>
+            <LoginButton onClick={handleLogout}>Sign Out</LoginButton>
+          </NavLinks>
+          : <NavLinks>
+            {renderNavLinks(pathname)}
+          </NavLinks>
+        }
         {isNavOpen
           ? <IconDiv>
-              <FontAwesomeIcon icon={faX} onClick={handleNavOpen} size='lg' color='#fbbf24'/>
-            </IconDiv>
+            <FontAwesomeIcon icon={faX} onClick={handleNavOpen} size='lg' color='#fbbf24'/>
+          </IconDiv>
           : <IconDiv>
-              <FontAwesomeIcon icon={faBars} onClick={handleNavOpen} size='lg' color='#fbbf24'/>
-            </IconDiv>
+            <FontAwesomeIcon icon={faBars} onClick={handleNavOpen} size='lg' color='#fbbf24'/>
+          </IconDiv>
         }
       </Container>
       {auth.username
         ? <DropDownMenu isNavOpen={isNavOpen}>
-            <DropDownButton active={active} id='1' onClick={filterNotes}>
-              <FontAwesomeIcon icon={faNoteSticky}/> All Notes
-            </DropDownButton>
-            {categories.map(category => {
-                if (category === '') {
-                  return null
-                } else {
-                  return (
-                  <DropDownButton active={active} key={category} id={category} onClick={filterNotes}>
-                      <FontAwesomeIcon icon={faTag}/> {category}
-                  </DropDownButton>
-                  );
-                }
-            })}
-            <DropDownButton active={active} id='signout'>
-              <Link to='/' onClick={handleLogout}>
-                <FontAwesomeIcon icon={faRightFromBracket}/> Sign Out
-              </Link>
-            </DropDownButton>
-          </DropDownMenu>
+          <DropDownButton active={active} id='1' onClick={filterNotes}>
+            <FontAwesomeIcon icon={faNoteSticky}/> All Notes
+          </DropDownButton>
+          {categories.map(category => {
+            if (category === '') {
+              return null;
+            } else {
+              return (
+                <DropDownButton active={active} key={category} id={category} onClick={filterNotes}>
+                  <FontAwesomeIcon icon={faTag}/> {category}
+                </DropDownButton>
+              );
+            }
+          })}
+          <DropDownButton active={active} id='signout'>
+            <Link to='/' onClick={handleLogout}>
+              <FontAwesomeIcon icon={faRightFromBracket}/> Sign Out
+            </Link>
+          </DropDownButton>
+        </DropDownMenu>
         : <DropDownMenu isNavOpen={isNavOpen}>
-            {renderDropDownLinks(pathname)}
-          </DropDownMenu>
+          {renderDropDownLinks(pathname)}
+        </DropDownMenu>
       }
     </Nav>
   );

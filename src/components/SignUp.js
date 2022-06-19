@@ -87,29 +87,29 @@ const SubmitButton = styled.button`
   }
   @media (hover: hover) and (pointer: fine) {
     &:hover {
-      ${ props => props.disabled 
-        ? 'none' 
-        : `color: #1f2937;
+      ${ props => props.disabled
+    ? 'none'
+    : `color: #1f2937;
           background-color: #818cf8;`
-      }
+}
     }
     &:active {
-      ${ props => props.disabled 
-        ? 'none' 
-        : `transition: none;
+      ${ props => props.disabled
+    ? 'none'
+    : `transition: none;
           outline: 2px solid #6366f1;
           background-color: #6366f1;`
-      }
+}
     }
   }
   @media (hover: none) and (pointer: coarse) {
     transition: none;
     &:active {
-      ${ props => props.disabled 
-        ? 'none' 
-        : `background-color: #818cf8;
+      ${ props => props.disabled
+    ? 'none'
+    : `background-color: #818cf8;
           color: #171717;`
-      }
+}
     }
   }
 `;

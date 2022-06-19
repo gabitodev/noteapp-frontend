@@ -48,8 +48,8 @@ const PersistLogin = () => {
         ? <Outlet />
         : isLoading
           ? <Container>
-               <p>Is loading...</p>
-            </Container>
+            <p>Is loading...</p>
+          </Container>
           : <Outlet />
       }
     </>

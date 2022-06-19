@@ -142,7 +142,7 @@ const EditNote = () => {
       category
     };
     try {
-      const {data: editedNote} = await axiosPrivate.put(id, noteToEdit);
+      const { data: editedNote } = await axiosPrivate.put(id, noteToEdit);
       setNotes(notes.map(note => note.id !== id ? note : editedNote));
       setNotification({
         message: `Note '${editedNote.title}' edited successfully 👍`,
@@ -156,18 +156,18 @@ const EditNote = () => {
         iseError: true,
       });
       setTimeout(() => setNotification(null), 3000);
-    };
+    }
   };
 
   const handleCancel = () => {
     setTitle(note.title);
     setContent(note.content);
     setContent(note.category);
-    navigate('/notes')
+    navigate('/notes');
   };
 
   const handleKeyDown = (e) => {
-    e.target.style.height = "inherit";
+    e.target.style.height = 'inherit';
     e.target.style.height = `${e.target.scrollHeight}px`;
   };
 
@@ -176,14 +176,14 @@ const EditNote = () => {
     <EditDiv>
       <Form onSubmit={(event) => handleEdit(event, note.id)}>
         <TitleInput type="text" value={title} onChange={({ target }) => setTitle(target.value)} />
-        <ConentTextArea 
-        name="content" 
-        id="content" 
-        onKeyDown={handleKeyDown} 
-        cols="10" 
-        rows="3" 
-        value={content} 
-        onChange={({ target }) => setContent(target.value)} />
+        <ConentTextArea
+          name="content"
+          id="content"
+          onKeyDown={handleKeyDown}
+          cols="10"
+          rows="3"
+          value={content}
+          onChange={({ target }) => setContent(target.value)} />
         <BottomDiv>
           <CategoryInput type="text" value={category} placeholder='Category' onChange={({ target }) => setCategory(target.value)}  />
           <ButtonDiv>
@@ -194,5 +194,5 @@ const EditNote = () => {
       </Form>
     </EditDiv>
   );
-}
+};
 export default EditNote;

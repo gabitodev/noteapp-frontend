@@ -48,6 +48,6 @@ const Notification = () => {
       <Text isError={notification.isError}>{notification.message}</Text>
     </NotificationDiv>
   );
-}
+};
 
 export default Notification;

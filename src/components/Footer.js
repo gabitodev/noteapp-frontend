@@ -28,7 +28,7 @@ const HeartIcon = styled.span`
 const Footer = () => {
   // States
   const [changeBackground, setChangeBackground] = useState(false);
-  
+
   // Hooks
   const { pathname } = useLocation();
 
@@ -46,6 +46,6 @@ const Footer = () => {
       <Text>Made with <HeartIcon>❤</HeartIcon> by Gabriel Garcia</Text>
     </Container>
   );
-}
+};
 
 export default Footer;
