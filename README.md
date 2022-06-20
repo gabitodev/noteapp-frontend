@@ -6,6 +6,8 @@ The notes can be sortered by category to better organization, has notifications 
 
 In order to use the app you have to create a user.
 
+Fully Responsive.
+
 This is the front-end of the app.
 This was made using ReactJS, JavaScript and CSS.
 
