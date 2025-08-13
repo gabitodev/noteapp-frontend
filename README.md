@@ -13,4 +13,4 @@ This was made using ReactJS, JavaScript and CSS.
 
 [Back-end-Repository](https://github.com/gabitodev/noteapp-backend)
 
-[Live Website](https://note-dev.herokuapp.com)
+[Live Website](https://noteapp-v2a6.onrender.com/)
